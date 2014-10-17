@@ -17,8 +17,8 @@ public class BoardTests {
 
 	@Before
 	public void setUp() {
-		ClueGame game = new ClueGame("ClueLayoutStudents.csv",
-				"roomConfig.txt", "Cards.txt", "PlayerCards.txt");
+		ClueGame game = new ClueGame("ClueLayoutStudents.csv", "roomConfig.txt", "Cards.txt",
+				"PlayerCards.txt");
 		game.loadConfigFiles();
 		board = game.getBoard();
 	}
@@ -53,14 +53,10 @@ public class BoardTests {
 		Assert.assertTrue(board.getCellAt(17, 3).isDoorway());
 		Assert.assertTrue(board.getCellAt(5, 9).isDoorway());
 		Assert.assertFalse(board.getCellAt(6, 6).isDoorway());
-		Assert.assertEquals(board.getRoomCellAt(2, 4).getDoorDirection(),
-				DoorDirection.RIGHT);
-		Assert.assertEquals(board.getRoomCellAt(10, 4).getDoorDirection(),
-				DoorDirection.RIGHT);
-		Assert.assertEquals(board.getRoomCellAt(17, 3).getDoorDirection(),
-				DoorDirection.UP);
-		Assert.assertEquals(board.getRoomCellAt(5, 9).getDoorDirection(),
-				DoorDirection.RIGHT);
+		Assert.assertEquals(board.getRoomCellAt(2, 4).getDoorDirection(), DoorDirection.RIGHT);
+		Assert.assertEquals(board.getRoomCellAt(10, 4).getDoorDirection(), DoorDirection.RIGHT);
+		Assert.assertEquals(board.getRoomCellAt(17, 3).getDoorDirection(), DoorDirection.UP);
+		Assert.assertEquals(board.getRoomCellAt(5, 9).getDoorDirection(), DoorDirection.RIGHT);
 	}
 
 	@Test
@@ -77,19 +73,17 @@ public class BoardTests {
 	}
 
 	@Test(expected = BadConfigFormatException.class)
-	public void checkLayoutExceptions() throws BadConfigFormatException,
-			FileNotFoundException {
-		ClueGame badGame = new ClueGame("ClueLayoutStudents.csv",
-				"roomConfig.txt", "Cards.txt", "PlayerCards.txt");
+	public void checkLayoutExceptions() throws BadConfigFormatException, FileNotFoundException {
+		ClueGame badGame = new ClueGame("ClueLayoutStudents.csv", "roomConfig.txt", "Cards.txt",
+				"PlayerCards.txt");
 		badGame.loadRoomConfig();
 		badGame.getBoard().loadBoardConfig("ClueLayoutBadColumns.csv");
 	}
 
 	@Test(expected = BadConfigFormatException.class)
-	public void checkLegendExceptions() throws BadConfigFormatException,
-			FileNotFoundException {
-		ClueGame badGame = new ClueGame("ClueLayoutStudents.csv",
-				"roomConfig.txt", "Cards.txt", "PlayerCards.txt");
+	public void checkLegendExceptions() throws BadConfigFormatException, FileNotFoundException {
+		ClueGame badGame = new ClueGame("ClueLayoutStudents.csv", "roomConfig.txt", "Cards.txt",
+				"PlayerCards.txt");
 		badGame.loadRoomConfig();
 		badGame.getBoard().loadBoardConfig("ClueLayout.csv");
 	}

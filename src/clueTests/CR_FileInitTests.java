@@ -29,8 +29,8 @@ public class CR_FileInitTests {
 
 	@BeforeClass
 	public static void setUp() {
-		ClueGame game = new ClueGame("ClueLayoutStudents.csv",
-				"roomConfig.txt", "Cards.txt", "PlayerCards.txt");
+		ClueGame game = new ClueGame("ClueLayoutStudents.csv", "roomConfig.txt", "Cards.txt",
+				"PlayerCards.txt");
 		game.loadConfigFiles();
 		board = game.getBoard();
 	}
@@ -114,11 +114,10 @@ public class CR_FileInitTests {
 
 	// Test that an exception is thrown for a bad config file
 	@Test(expected = BadConfigFormatException.class)
-	public void testBadColumns() throws BadConfigFormatException,
-			FileNotFoundException {
+	public void testBadColumns() throws BadConfigFormatException, FileNotFoundException {
 		// overloaded Game ctor takes config file names
-		ClueGame game = new ClueGame("ClueLayoutStudents.csv",
-				"roomConfig.txt", "Cards.txt", "PlayerCards.txt");
+		ClueGame game = new ClueGame("ClueLayoutStudents.csv", "roomConfig.txt", "Cards.txt",
+				"PlayerCards.txt");
 		// You may change these calls if needed to match your function names
 		// My loadConfigFiles has a try/catch, so I can't call it directly to
 		// see test throwing the BadConfigFormatException
@@ -128,22 +127,20 @@ public class CR_FileInitTests {
 
 	// Test that an exception is thrown for a bad config file
 	@Test(expected = BadConfigFormatException.class)
-	public void testBadRoom() throws BadConfigFormatException,
-			FileNotFoundException {
+	public void testBadRoom() throws BadConfigFormatException, FileNotFoundException {
 		// overloaded Board ctor takes config file name
-		ClueGame game = new ClueGame("ClueLayoutStudents.csv",
-				"roomConfig.txt", "Cards.txt", "PlayerCards.txt");
+		ClueGame game = new ClueGame("ClueLayoutStudents.csv", "roomConfig.txt", "Cards.txt",
+				"PlayerCards.txt");
 		game.loadRoomConfig();
 		game.getBoard().loadBoardConfig("ClueLayoutBadRoom.csv");
 	}
 
 	// Test that an exception is thrown for a bad config file
 	@Test(expected = BadConfigFormatException.class)
-	public void testBadRoomFormat() throws BadConfigFormatException,
-			FileNotFoundException {
+	public void testBadRoomFormat() throws BadConfigFormatException, FileNotFoundException {
 		// overloaded Board ctor takes config file name
-		ClueGame game = new ClueGame("ClueLayoutStudents.csv",
-				"roomConfig.txt", "Cards.txt", "PlayerCards.txt");
+		ClueGame game = new ClueGame("ClueLayoutStudents.csv", "roomConfig.txt", "Cards.txt",
+				"PlayerCards.txt");
 		game.loadRoomConfig();
 		game.getBoard().loadBoardConfig("ClueLayout.csv");
 	}

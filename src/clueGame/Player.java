@@ -24,8 +24,7 @@ public class Player {
 		myCards = new ArrayList<>();
 	}
 
-	public void loadPlayers(String filename) throws NumberFormatException,
-	IOException {
+	public void loadPlayers(String filename) throws NumberFormatException, IOException {
 		BufferedReader reader = new BufferedReader(new FileReader(filename));
 		ArrayList<Player> playerList = new ArrayList<Player>();
 		ComputerPlayer compPlayer;
@@ -76,8 +75,7 @@ public class Player {
 		Color color;
 		try {
 			// We can use reflection to convert the string to a color
-			Field field = Class.forName("java.awt.Color").getField(
-					strColor.trim());
+			Field field = Class.forName("java.awt.Color").getField(strColor.trim());
 			color = (Color) field.get(null);
 		} catch (Exception e) {
 			color = null; // Not defined }

@@ -16,8 +16,8 @@ public class PathTests {
 
 	@Before
 	public void setUp() {
-		ClueGame game = new ClueGame("ClueLayoutStudents.csv",
-				"roomConfig.txt", "Cards.txt", "PlayerCards.txt");
+		ClueGame game = new ClueGame("ClueLayoutStudents.csv", "roomConfig.txt", "Cards.txt",
+				"PlayerCards.txt");
 		game.loadConfigFiles();
 		board = game.getBoard();
 		board.calcAdjacencies();

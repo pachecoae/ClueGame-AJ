@@ -11,7 +11,6 @@ import java.util.Set;
 
 import clueGame.RoomCell.DoorDirection;
 
-
 public class Board {
 	public static int MAX_ROWS = 50;
 	public static int MAX_COLS = 50;
@@ -109,8 +108,7 @@ public class Board {
 		}
 	}
 
-	public boolean isViableMove(int row, int col,
-			DoorDirection allowedDoorDirection) {
+	public boolean isViableMove(int row, int col, DoorDirection allowedDoorDirection) {
 		// If the cell is out of bounds return false
 		if (row < 0 || row >= numRows)
 			return false;
@@ -129,32 +127,32 @@ public class Board {
 		// Must be a walkway
 		return true;
 	}
-	
-	public void calcTargets(int row, int col, int moves){
+
+	public void calcTargets(int row, int col, int moves) {
 		targetList = new HashSet<BoardCell>();
 		visited = new HashSet<BoardCell>();
 		visited.add(getCellAt(row, col));
 		findAllTargets(getCellAt(row, col), moves);
 	}
-	
-	public void findAllTargets(BoardCell cell, int moves){
+
+	public void findAllTargets(BoardCell cell, int moves) {
 		LinkedList<BoardCell> adjCells = nonVisitedAdjCells(cell);
-		for(BoardCell c : adjCells){
+		for (BoardCell c : adjCells) {
 			visited.add(c);
-			if(moves == 1 || c.isDoorway())
+			if (moves == 1 || c.isDoorway())
 				targetList.add(c);
 			else
-				findAllTargets(c, moves-1);
+				findAllTargets(c, moves - 1);
 			visited.remove(c);
 		}
-		
+
 	}
-	
-	public LinkedList<BoardCell> nonVisitedAdjCells(BoardCell cell){
+
+	public LinkedList<BoardCell> nonVisitedAdjCells(BoardCell cell) {
 		LinkedList<BoardCell> nonVisitedCells = new LinkedList<BoardCell>();
 		LinkedList<BoardCell> adjLinkedList = adjList.get(cell);
-		for(BoardCell c : adjLinkedList){
-			if(!visited.contains(c)){
+		for (BoardCell c : adjLinkedList) {
+			if (!visited.contains(c)) {
 				nonVisitedCells.add(c);
 			}
 		}

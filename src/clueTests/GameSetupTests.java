@@ -36,8 +36,8 @@ public class GameSetupTests {
 
 	@Before
 	public void setUpBefore() {
-		game = new ClueGame("ClueLayoutStudents.csv", "roomConfig.txt",
-				"Cards.txt", "PlayerCards.txt");
+		game = new ClueGame("ClueLayoutStudents.csv", "roomConfig.txt", "Cards.txt",
+				"PlayerCards.txt");
 		game.loadConfigFiles();
 		game.getBoard().calcAdjacencies();
 	}
@@ -45,13 +45,13 @@ public class GameSetupTests {
 	/*
 	 * How can we test loading the people from file?
 	 * 
-	 * I check the human player and 2 of the computer players (the first and
-	 * last in my file) to ensure that they have the correct:
+	 * I check the human player and 2 of the computer players (the first and last in my file) to
+	 * ensure that they have the correct:
 	 * 
 	 * Name, Color, Starting location
 	 * 
-	 * NOTE: You will determine the format for the file(s) you load during this
-	 * lab. This is discussed more in Part II.
+	 * NOTE: You will determine the format for the file(s) you load during this lab. This is
+	 * discussed more in Part II.
 	 */
 
 	@Test
@@ -104,8 +104,8 @@ public class GameSetupTests {
 	 * 
 	 * To be a valid deal, we need to ensure that:
 	 * 
-	 * all cards are dealt. all players have roughly the same number of cards.
-	 * one card is not given to two different players.
+	 * all cards are dealt. all players have roughly the same number of cards. one card is not given
+	 * to two different players.
 	 */
 
 	@Test
@@ -131,8 +131,7 @@ public class GameSetupTests {
 
 				cards.retainAll(game.players.get(j).getCards());
 				if (cards.size() != 0) {
-					Assert.fail("Player " + i + " and player " + j
-							+ " had the same card");
+					Assert.fail("Player " + i + " and player " + j + " had the same card");
 				}
 			}
 		}

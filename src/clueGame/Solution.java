@@ -4,6 +4,16 @@ public class Solution {
 	public String person, weapon, room;
 
 	public Solution() {
+		person = "";
+		weapon = "";
+		room = "";
+	}
+
+	// Constructor used for testing purposes
+	public Solution(String person, String weapon, String room) {
+		this.person = person;
+		this.weapon = weapon;
+		this.room = room;
 	}
 
 	// Getters and setters used purely for testing purposes.

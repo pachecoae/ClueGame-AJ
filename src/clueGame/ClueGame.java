@@ -22,6 +22,7 @@ public class ClueGame {
 	private String deckFile;
 	public List<Player> players;
 	private List<Card> deck;
+	public Solution solution;
 
 	public ClueGame(String map, String legend, String deck, String players) {
 		this.board = new Board();
@@ -32,6 +33,7 @@ public class ClueGame {
 		this.playerFile = players;
 		this.deckFile = deck;
 		this.deck = new ArrayList<>();
+		this.solution = new Solution();
 	}
 
 	public Board getBoard() {
@@ -115,8 +117,7 @@ public class ClueGame {
 		fileIn.close();
 	}
 
-	public void loadRoomConfig() throws BadConfigFormatException,
-	FileNotFoundException {
+	public void loadRoomConfig() throws BadConfigFormatException, FileNotFoundException {
 		FileReader reader = new FileReader(legendFile);
 		Scanner fileIn = new Scanner(reader);
 		// Parse Line by line
@@ -134,8 +135,7 @@ public class ClueGame {
 			// Make sure first part is a char
 			if (parts[0].length() != 1) {
 				fileIn.close();
-				throw new BadConfigFormatException(
-						"Room initial is not 1 letter!");
+				throw new BadConfigFormatException("Room initial is not 1 letter!");
 			}
 
 			// Remove spaces from parts[1]
@@ -196,13 +196,20 @@ public class ClueGame {
 
 	}
 
-	public void handleSuggestion(String person, String room, String weapon,
-			Player accusingPerson) {
+	public void handleSuggestion(String person, String room, String weapon, Player accusingPerson) {
 
 	}
 
 	public boolean checkAccusation(Solution solution) {
-
+		if (this.solution.person != solution.person) {
+			return false;
+		}
+		if (this.solution.room != solution.room) {
+			return false;
+		}
+		if (this.solution.weapon != solution.weapon) {
+			return false;
+		}
 		return true;
 	}
 
