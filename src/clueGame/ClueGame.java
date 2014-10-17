@@ -57,23 +57,28 @@ public class ClueGame {
 		ComputerPlayer compPlayer;
 		HumanPlayer humPlayer;
 
-		String s;
-		String[] arr;
+		String line;
+		String[] lineArray;
 		int linenum = 0;
 
 		while (reader.hasNextLine()) {
-			s = reader.nextLine();
-			arr = s.split(",");
-			// [0] = name, [1] = color, [2] = y-coord, [3] = x-coord
-			int yCoord = Integer.parseInt(arr[2]);
-			int xCoord = Integer.parseInt(arr[3]);
+			// Reads in the line from the file and then splits it into an array where:
+			// lineArray[0] = name
+			// lineArray[1] = color
+			// lineArray[2] = y-coord
+			// lineArray[3] = x-coord
+			line = reader.nextLine();
+			lineArray = line.split(",");
+			int yCoord = Integer.parseInt(lineArray[2]);
+			int xCoord = Integer.parseInt(lineArray[3]);
 
 			if (linenum == 0) {
 				// The first player in the file will be the human player.
-				humPlayer = new HumanPlayer(arr[0], arr[1], yCoord, xCoord);
+				humPlayer = new HumanPlayer(lineArray[0], lineArray[1], yCoord, xCoord);
 				players.add(humPlayer);
 			} else {
-				compPlayer = new ComputerPlayer(arr[0], arr[1], yCoord, xCoord);
+				// All other players will be computer players
+				compPlayer = new ComputerPlayer(lineArray[0], lineArray[1], yCoord, xCoord);
 				players.add(compPlayer);
 			}
 			linenum++;
@@ -200,6 +205,8 @@ public class ClueGame {
 
 	}
 
+	// Checks to see if the solution's person, weapon, and room names are the same as the accused
+	// person, weapon, and room names.
 	public boolean checkAccusation(Solution solution) {
 		if (this.solution.person != solution.person) {
 			return false;

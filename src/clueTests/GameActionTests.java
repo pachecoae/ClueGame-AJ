@@ -40,8 +40,10 @@ public class GameActionTests {
 
 	@Test
 	public void testAccusation() {
+		// Setting up the game's solution
 		game.solution = new Solution("Professor Plum", "Rope", "Hall");
 
+		// Set up the asserted correct solutions and then check to see if the accusation is correct
 		Solution correctSolution = new Solution("Professor Plum", "Rope", "Hall");
 		Assert.assertEquals(true, game.checkAccusation(correctSolution));
 
