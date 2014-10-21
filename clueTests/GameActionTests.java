@@ -2,12 +2,14 @@ package clueTests;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import clueGame.BoardCell;
 import clueGame.Card;
 import clueGame.Card.CardType;
 import clueGame.ClueGame;
@@ -69,14 +71,82 @@ public class GameActionTests {
 		Assert.assertFalse(game.checkAccusation(wrongRoom));
 	}
 
+	// - Disprove a suggestion. Tests include:
+
+	// - Tests that one player returns the only possible card (one person, one room, one weapon).
+
+	// - A test that one player randomly chooses between two possible cards.
+
+	// - A test that players are queried in order.
+
+	// - Tests involving the human player.
+
+	// - A test that the player whose turn it is does not return a card.
+
 	@Test
 	public void disproveSuggestion() {
+		Solution solution = new Solution();
+		solution.setPerson(profPlum.name);
+		solution.setRoom(hall.name);
+		solution.setWeapon(rope.name);
+
+		// Tests that one player returns the only possible card (one person, one room, one weapon).
+		ComputerPlayer.unseen.add(profPlum);
+
+		Assert.assertTrue(ai0.createSuggestion().contains(profPlum));
+		Assert.assertTrue(ai0.createSuggestion().contains(rope));
+		Assert.assertTrue(ai0.createSuggestion().contains(hall));
+
+		// A test that one player randomly chooses between two possible cards.
+		ComputerPlayer.unseen.clear();
+		ComputerPlayer.unseen.add(profPlum);
+		ComputerPlayer.unseen.add(missScarlet);
+
+		// Assert.assertTrue(ai0.createSuggestion().contains(profPlum) ||
+		// ai0.createSuggestion().contains(missScarlet);
+		Assert.assertTrue(ai0.createSuggestion().contains(rope));
+		Assert.assertTrue(ai0.createSuggestion().contains(hall));
+
+		// A test that players are queried in order.
+
+		// Tests involving the human player.
+
+		// A test that the player whose turn it is does not return a card.
 
 	}
 
+	// - Select a target. Tests include:
+
+	// - A set of targets that include a room.
+
+	// - A random selection from a set of targets that don't include a room.
+
+	// - A test that considers the last visited room.
+
 	@Test
 	public void selectTarget() {
+		Set<BoardCell> targetList;
 
+		// Create a list of targets that include a room.
+		game.getBoard().calcTargets(21, 5, 1);
+		targetList = game.getBoard().getTargets();
+		ai0.pickLocation(targetList);
+		Assert.assertEquals('L', ai0.currentRoom);
+
+		// Create a list of targets that do not include a room.
+		game.getBoard().calcTargets(6, 5, 1);
+		targetList = game.getBoard().getTargets();
+		ai0.pickLocation(targetList);
+		Assert.assertEquals('W', ai0.currentRoom);
+
+		// Set the last visited room to 'L'.
+		ai0.lastRoomVisited = 'L';
+
+		// Create a list of targets that include the last visited room.
+		game.getBoard().calcTargets(21, 5, 1);
+		targetList = game.getBoard().getTargets();
+		ai0.pickLocation(targetList);
+		Assert.assertEquals('W', ai0.currentRoom);
 	}
 
 	@Test
@@ -93,9 +163,6 @@ public class GameActionTests {
 		Assert.assertTrue(cardList.contains(rope));
 		Assert.assertTrue(cardList.contains(hall));
 
-		// ********
-		//
-		// ********
 		unseenCards.clear();
 		unseenCards.add(missScarlet);
 		unseenCards.add(profPlum);
