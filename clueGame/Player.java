@@ -13,14 +13,14 @@ public class Player {
 	private String name;
 	private List<Card> myCards;
 	private String color;
-	private int xCoord;
-	private int yCoord;
+	protected int col;
+	protected int row;
 
-	public Player(String name, String color, int yCoord, int xCoord) {
+	public Player(String name, String color, int row, int col) {
 		this.name = name;
 		this.color = color;
-		this.yCoord = yCoord;
-		this.xCoord = xCoord;
+		this.row = row;
+		this.col = col;
 		myCards = new ArrayList<>();
 	}
 
@@ -89,8 +89,8 @@ public class Player {
 		int result = 1;
 		result = prime * result + ((color == null) ? 0 : color.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		result = prime * result + xCoord;
-		result = prime * result + yCoord;
+		result = prime * result + col;
+		result = prime * result + row;
 		return result;
 	}
 
@@ -120,10 +120,10 @@ public class Player {
 		} else if (!name.equals(other.name)) {
 			return false;
 		}
-		if (xCoord != other.xCoord) {
+		if (col != other.col) {
 			return false;
 		}
-		if (yCoord != other.yCoord) {
+		if (row != other.row) {
 			return false;
 		}
 		return true;

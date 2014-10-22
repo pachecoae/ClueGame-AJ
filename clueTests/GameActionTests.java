@@ -22,7 +22,7 @@ public class GameActionTests {
 
 	private static Card profPlum;
 	private static Card rope;
-	private static Card hall;
+	private static Card dungeon;
 	private static Card missScarlet;
 
 	private static HumanPlayer human;
@@ -36,7 +36,7 @@ public class GameActionTests {
 		profPlum = new Card("Professor Plum", CardType.PERSON);
 		missScarlet = new Card("Miss Scarlet", CardType.PERSON);
 		rope = new Card("Rope", CardType.WEAPON);
-		hall = new Card("Hall", CardType.ROOM);
+		dungeon = new Card("Dungeon", CardType.ROOM);
 
 		human = new HumanPlayer("Professor Plum", "Purple", 0, 6);
 		ai0 = new ComputerPlayer("Mrs. White", "White", 0, 11);
@@ -56,8 +56,7 @@ public class GameActionTests {
 		// Setting up the game's solution
 		game.solution = new Solution("Professor Plum", "Rope", "Hall");
 
-		// Set up the asserted correct solutions and then check to see if the
-		// accusation is correct
+		// Set up the asserted correct solutions and then check to see if the accusation is correct
 		Solution correctSolution = new Solution("Professor Plum", "Rope", "Hall");
 		Assert.assertTrue(game.checkAccusation(correctSolution));
 
@@ -85,27 +84,28 @@ public class GameActionTests {
 
 	@Test
 	public void disproveSuggestion() {
-		Solution solution = new Solution();
-		solution.setPerson(profPlum.name);
-		solution.setRoom(hall.name);
-		solution.setWeapon(rope.name);
+		// Solution solution = new Solution();
+		// solution.setPerson(profPlum.name);
+		// solution.setRoom(dungeon.name);
+		// solution.setWeapon(rope.name);
 
 		// Tests that one player returns the only possible card (one person, one room, one weapon).
-		ComputerPlayer.unseen.add(profPlum);
 
-		Assert.assertTrue(ai0.createSuggestion().contains(profPlum));
-		Assert.assertTrue(ai0.createSuggestion().contains(rope));
-		Assert.assertTrue(ai0.createSuggestion().contains(hall));
+		// ComputerPlayer.unseen.add(profPlum);
+		// Assert.assertTrue(ai0.createSuggestion().contains(profPlum));
+		// Assert.assertTrue(ai0.createSuggestion().contains(rope));
+		// Assert.assertTrue(ai0.createSuggestion().contains(dungeon));
 
 		// A test that one player randomly chooses between two possible cards.
-		ComputerPlayer.unseen.clear();
-		ComputerPlayer.unseen.add(profPlum);
-		ComputerPlayer.unseen.add(missScarlet);
+
+		// ComputerPlayer.unseen.clear();
+		// ComputerPlayer.unseen.add(profPlum);
+		// ComputerPlayer.unseen.add(missScarlet);
 
 		// Assert.assertTrue(ai0.createSuggestion().contains(profPlum) ||
 		// ai0.createSuggestion().contains(missScarlet);
-		Assert.assertTrue(ai0.createSuggestion().contains(rope));
-		Assert.assertTrue(ai0.createSuggestion().contains(hall));
+		// Assert.assertTrue(ai0.createSuggestion().contains(rope));
+		// Assert.assertTrue(ai0.createSuggestion().contains(dungeon));
 
 		// A test that players are queried in order.
 
@@ -155,28 +155,28 @@ public class GameActionTests {
 		unseenCards.add(profPlum);
 		unseenCards.add(rope);
 		ComputerPlayer.unseen = unseenCards;
-		ai0.currentRoom = 'H';
+		ai0.currentRoom = 'D';
 		List<Card> cardList = ai0.createSuggestion();
 
 		Assert.assertEquals(3, cardList.size());
 		Assert.assertTrue(cardList.contains(profPlum));
 		Assert.assertTrue(cardList.contains(rope));
-		Assert.assertTrue(cardList.contains(hall));
+		Assert.assertTrue(cardList.contains(dungeon));
 
 		unseenCards.clear();
 		unseenCards.add(missScarlet);
 		unseenCards.add(profPlum);
 		unseenCards.add(rope);
 
-		cardList = ai0.createSuggestion();
-
-		Assert.assertEquals(3, cardList.size());
-		Assert.assertTrue(cardList.contains(rope));
-		Assert.assertTrue(cardList.contains(hall));
-
 		boolean seenPlum = false;
 		boolean seenScarlet = false;
 		for (int i = 0; i < 1000; i++) {
+			cardList = ai0.createSuggestion();
+
+			Assert.assertEquals(3, cardList.size());
+			Assert.assertTrue(cardList.contains(rope));
+			Assert.assertTrue(cardList.contains(dungeon));
+
 			if (cardList.contains(profPlum)) {
 				seenPlum = true;
 			} else if (cardList.contains(missScarlet)) {

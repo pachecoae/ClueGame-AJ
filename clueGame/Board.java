@@ -18,7 +18,7 @@ public class Board {
 	private int numColumns;
 	private BoardCell[][] board;
 	private Set<BoardCell> visited;
-	private Map<Character, String> rooms;
+	private static Map<Character, String> rooms;
 	private Set<BoardCell> targetList;
 	private Map<BoardCell, LinkedList<BoardCell>> adjList;
 
@@ -168,7 +168,7 @@ public class Board {
 		return numColumns;
 	}
 
-	public Map<Character, String> getRooms() {
+	public static Map<Character, String> getRooms() {
 		return rooms;
 	}
 
@@ -190,7 +190,7 @@ public class Board {
 
 	// Setters
 	public void setRooms(Map<Character, String> rooms) {
-		this.rooms = rooms;
+		Board.rooms = rooms;
 	}
 
 }
