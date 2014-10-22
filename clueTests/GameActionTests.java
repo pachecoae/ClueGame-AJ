@@ -46,8 +46,7 @@ public class GameActionTests {
 
 	@Before
 	public void setUpBefore() {
-		game = new ClueGame("ClueLayoutStudents.csv", "roomConfig.txt", "Cards.txt",
-				"PlayerCards.txt");
+		game = new ClueGame("ClueLayoutStudents.csv", "roomConfig.txt", "Cards.txt", "PlayerCards.txt");
 		game.loadConfigFiles();
 		game.getBoard().calcAdjacencies();
 	}
@@ -110,8 +109,7 @@ public class GameActionTests {
 		Frank.setCards(Frankscards);
 
 		// Test for when 1 card in "Frank's" hand disproves the suggestion
-		Assert.assertEquals(Frank.disproveSuggestion("Professor Plum", "Billiard Room", "Rope"),
-				profPlum);
+		Assert.assertEquals(profPlum, Frank.disproveSuggestion("Professor Plum", "Billiard Room", "Rope"));
 
 		// Test for when 2 cards in "Frank's" hand disproves the suggestion
 
@@ -120,7 +118,6 @@ public class GameActionTests {
 		for (int i = 0; i < 1000; i++) {
 			Card disprove = Frank.disproveSuggestion("Professor Plum", "Conservatory", "Rope");
 			Assert.assertNotNull(disprove);
-
 			if (disprove.equals(profPlum)) {
 				seenPlum = true;
 			} else if (disprove.equals(conservatory)) {
@@ -134,6 +131,18 @@ public class GameActionTests {
 		}
 		Assert.assertTrue(seenPlum);
 		Assert.assertTrue(seenConservatory);
+
+		// Test that all players are queried in order.
+		game.players.get(5).setCards(Frank.getCards());
+		game.turn = 0;
+		for (int i = 1; i < game.players.size(); i++) {
+			Card suggestion = game.players.get(i).disproveSuggestion("Professor Plum", "Billiard Room", "Rope");
+			if (i < game.players.size() - 1) {
+				Assert.assertNull(suggestion);
+			} else {
+				Assert.assertEquals(profPlum, suggestion);
+			}
+		}
 
 	}
 

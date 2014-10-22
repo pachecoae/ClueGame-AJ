@@ -23,6 +23,7 @@ public class ClueGame {
 	public List<Player> players;
 	private List<Card> deck;
 	public Solution solution;
+	public int turn;
 
 	public ClueGame(String map, String legend, String deck, String players) {
 		this.board = new Board();
@@ -34,6 +35,7 @@ public class ClueGame {
 		this.deckFile = deck;
 		this.deck = new ArrayList<>();
 		this.solution = new Solution();
+		this.turn = 0;
 	}
 
 	public Board getBoard() {
