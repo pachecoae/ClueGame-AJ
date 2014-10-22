@@ -113,13 +113,13 @@ public class GameSetupTests {
 
 	@Test
 	public void testDeal() {
+		int max = (int) Math.ceil(game.getDeck().size() / (game.players.size() - 1));
 		game.deal();
 
 		// We first check to make sure that the maximum number of cards is equal to the first
 		// player's number of cards
 		Player playerA = game.players.get(0);
-		Assert.assertEquals(5, playerA.getCards().size());
-		int max = playerA.getCards().size();
+		Assert.assertEquals(4, playerA.getCards().size());
 
 		// We use this maximum number of cards to make sure that all players have roughly the same
 		// number of cards.

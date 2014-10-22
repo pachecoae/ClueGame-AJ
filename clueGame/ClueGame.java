@@ -171,7 +171,7 @@ public class ClueGame {
 		while (deck.size() > 0) {
 			// Reset the counter if it is greater than the number of players, as
 			// it represents the player's position in the player list.
-			if (count == players.size() - 1) {
+			if (count == players.size()) {
 				count = 0;
 			}
 

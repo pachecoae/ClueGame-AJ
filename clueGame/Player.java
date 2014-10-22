@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 public class Player {
@@ -56,6 +57,18 @@ public class Player {
 	}
 
 	public Card disproveSuggestion(String person, String room, String weapon) {
+
+		Collections.shuffle(myCards);
+		for (Card c : myCards) {
+			if (c.name == person) {
+				return c;
+			} else if (c.name == room) {
+				return c;
+			} else if (c.name == weapon) {
+				return c;
+			}
+		}
+
 		return null;
 	}
 

@@ -15,6 +15,7 @@ import clueGame.Card.CardType;
 import clueGame.ClueGame;
 import clueGame.ComputerPlayer;
 import clueGame.HumanPlayer;
+import clueGame.Player;
 import clueGame.Solution;
 
 public class GameActionTests {
@@ -83,37 +84,90 @@ public class GameActionTests {
 	// - A test that the player whose turn it is does not return a card.
 
 	@Test
-	public void disproveSuggestion() {
-		// Solution solution = new Solution();
-		// solution.setPerson(profPlum.name);
-		// solution.setRoom(dungeon.name);
-		// solution.setWeapon(rope.name);
+	public void testDisproveSuggestion() {
+		// Setting up the game's solution
+		game.solution = new Solution("Mr. Green", "Rope", "Hall");
 
-		// Tests that one player returns the only possible card (one person, one room, one weapon).
+		ComputerPlayer Frank = new ComputerPlayer("Professor Plum", "Purple", 0, 0);
 
-		// ComputerPlayer.unseen.add(profPlum);
-		// Assert.assertTrue(ai0.createSuggestion().contains(profPlum));
-		// Assert.assertTrue(ai0.createSuggestion().contains(rope));
-		// Assert.assertTrue(ai0.createSuggestion().contains(dungeon));
+		Card knife = new Card("Knife", CardType.WEAPON);
+		Card wrench = new Card("Wrench", CardType.WEAPON);
+		Card profPlum = new Card("Professor Plum", CardType.PERSON);
+		Card mrsWhite = new Card("mrs. White", CardType.PERSON);
+		Card conservatory = new Card("Conservatory", CardType.ROOM);
+		Card kitchen = new Card("Kitchen", CardType.ROOM);
 
-		// A test that one player randomly chooses between two possible cards.
+		List<Card> Frankscards;
 
-		// ComputerPlayer.unseen.clear();
-		// ComputerPlayer.unseen.add(profPlum);
-		// ComputerPlayer.unseen.add(missScarlet);
+		Frankscards = Frank.getCards();
+		Frankscards.add(knife);
+		Frankscards.add(wrench);
+		Frankscards.add(profPlum);
+		Frankscards.add(mrsWhite);
+		Frankscards.add(conservatory);
+		Frankscards.add(kitchen);
 
-		// Assert.assertTrue(ai0.createSuggestion().contains(profPlum) ||
-		// ai0.createSuggestion().contains(missScarlet);
-		// Assert.assertTrue(ai0.createSuggestion().contains(rope));
-		// Assert.assertTrue(ai0.createSuggestion().contains(dungeon));
+		Frank.setCards(Frankscards);
 
-		// A test that players are queried in order.
+		// Test for when 1 card in "Frank's" hand disproves the suggestion
+		Assert.assertEquals(Frank.disproveSuggestion("Professor Plum", "Billiard Room", "Rope"),
+				profPlum);
 
-		// Tests involving the human player.
+		// Test for when 2 cards in "Frank's" hand disproves the suggestion
 
-		// A test that the player whose turn it is does not return a card.
+		boolean seenPlum = false;
+		boolean seenConservatory = false;
+		for (int i = 0; i < 1000; i++) {
+			Card disprove = Frank.disproveSuggestion("Professor Plum", "Conservatory", "Rope");
+			Assert.assertNotNull(disprove);
+
+			if (disprove.equals(profPlum)) {
+				seenPlum = true;
+			} else if (disprove.equals(conservatory)) {
+				seenConservatory = true;
+			} else {
+				Assert.fail("Expected to see either Professor Plum or the Conservatory, not neither.");
+			}
+			if (seenPlum == true && seenConservatory == true) {
+				break;
+			}
+		}
+		Assert.assertTrue(seenPlum);
+		Assert.assertTrue(seenConservatory);
 
 	}
+
+	// @Test
+	// public void disproveSuggestion() {
+	// // Solution solution = new Solution();
+	// // solution.setPerson(profPlum.name);
+	// // solution.setRoom(dungeon.name);
+	// // solution.setWeapon(rope.name);
+	//
+	// // Tests that one player returns the only possible card (one person, one room, one weapon).
+	//
+	// // ComputerPlayer.unseen.add(profPlum);
+	// // Assert.assertTrue(ai0.createSuggestion().contains(profPlum));
+	// // Assert.assertTrue(ai0.createSuggestion().contains(rope));
+	// // Assert.assertTrue(ai0.createSuggestion().contains(dungeon));
+	//
+	// // A test that one player randomly chooses between two possible cards.
+	//
+	// // ComputerPlayer.unseen.clear();
+	// // ComputerPlayer.unseen.add(profPlum);
+	// // ComputerPlayer.unseen.add(missScarlet);
+	//
+	// // Assert.assertTrue(ai0.createSuggestion().contains(profPlum) ||
+	// // ai0.createSuggestion().contains(missScarlet);
+	// // Assert.assertTrue(ai0.createSuggestion().contains(rope));
+	// // Assert.assertTrue(ai0.createSuggestion().contains(dungeon));
+	//
+	// // A test that players are queried in order.
+	//
+	// // Tests involving the human player.
+	//
+	// // A test that the player whose turn it is does not return a card.
+	// }
 
 	// - Select a target. Tests include:
 
