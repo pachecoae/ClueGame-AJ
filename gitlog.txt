@@ -1,0 +1,41 @@
+commit 866979529e57259cfcac06e69826e35699fd03f3
+Author: Andre Pacheco <apacheco@mymail.mines.edu>
+Date:   Wed Oct 22 21:08:08 2014 -0600
+
+    Finished passing test for all GameActionTests.
+
+commit 982554354942a44e83f0e5ed4dc6f8df73706581
+Author: Andre Pacheco <apacheco@mymail.mines.edu>
+Date:   Wed Oct 22 18:42:31 2014 -0600
+
+    Finished creating the test for disproveSuggestion. Not working yet.
+
+commit 58874ad2d78d4a49870f2bca3343852b0a08758d
+Author: Andre Pacheco <apacheco@mymail.mines.edu>
+Date:   Tue Oct 21 22:00:31 2014 -0600
+
+    Wrote test to see if players were queried in order.
+
+commit 4b2888b73a797c6895cae90650016fa0d0b6f18c
+Author: Andre Pacheco <apacheco@mymail.mines.edu>
+Date:   Tue Oct 21 21:45:46 2014 -0600
+
+    Created test for when 1 card disproves the suggestion or 2; Subsequently fixed deal and disproveSuggestion so that both tests are now passing. Three tests still need to be created for disproveSuggestion.
+
+commit dc49b11efe15a14e703f0c0432aeff70570ca654
+Author: Andre Pacheco <apacheco@mymail.mines.edu>
+Date:   Tue Oct 21 21:02:38 2014 -0600
+
+    Finished passing tests for all tests except for disproveSuggestion. Still have to finish creating test for disproveSuggestion.
+
+commit f4eab04b708397abee5c6efcfb7cdb264c936c5c
+Author: Andre Pacheco <apacheco@mymail.mines.edu>
+Date:   Tue Oct 21 17:43:01 2014 -0600
+
+    Finished writing target tests; Started writing disproveSuggestion tests.
+
+commit aadd5c4986a2227bf37138d556cb6e5e239cda78
+Author: Andre Pacheco <apacheco@mymail.mines.edu>
+Date:   Mon Oct 20 23:33:58 2014 -0600
+
+    Finished makeSuggestion test.
