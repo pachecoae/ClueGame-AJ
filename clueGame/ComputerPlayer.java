@@ -14,11 +14,17 @@ public class ComputerPlayer extends Player {
 		super(name, color, yCoord, xCoord);
 	}
 
+	// Selects random location for the computer player in the case that there are only walkway cells to choose from.
+	// Selects random location for the computer player in the case that there are only walkway cells and a doorway that is from a room that was last entered to choose from.
+	// Selects a doorway if it was not visited last and is in a list of possible locations.
 	public void pickLocation(Set<BoardCell> targets) {
 		for (BoardCell b : targets) {
 			if (b.isDoorway()) {
+				// Check to see if b is a room cell.
 				if (b instanceof RoomCell) {
+					// If b is confirmed to be a room cell, check its initial and compare it to the last room visited's initial.
 					if (((RoomCell) b).getInitial() == lastRoomVisited) {
+						// If they are the same, continue going through the loop.
 						continue;
 					}
 					row = b.getRow();
@@ -30,9 +36,13 @@ public class ComputerPlayer extends Player {
 				}
 			}
 		}
+		// If a doorway has not been found, or has already been visited, shuffle the possible locations and return a walkway.
 		List<BoardCell> targetList = new ArrayList<>(targets);
-		Collections.shuffle(targetList);
 		BoardCell b = targetList.get(0);
+		// If a doorway has already been visited, and is still in the target list, make sure to return only a walkway.
+		while(b.isDoorway()) {
+			Collections.shuffle(targetList);
+		}
 		row = b.getRow();
 		col = b.getCol();
 		currentRoom = 'W';

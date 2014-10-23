@@ -152,13 +152,6 @@ public class ClueGame {
 		fileIn.close();
 	}
 
-	// This method generates a random integer between two bounds
-	// public static int randInt(int min, int max) {
-	// Random rand = new Random();
-	// int randomNum = rand.nextInt((max - min) + 1) + min;
-	// return randomNum;
-	// }
-
 	// This method deals all of the cards to the players in the game
 	public void deal() {
 		// int random;
@@ -202,19 +195,25 @@ public class ClueGame {
 
 	}
 
+	// Method that queries players in order that they appear in the player list and checks if they have the suggested cards.
 	public Card handleSuggestion(String person, String room, String weapon, Player accusingPerson) {
-		List<Card> totalMatches = new ArrayList<>();
+		// Create a null suggestion to be filled in for loop or returned if no card is found.
 		Card suggestion = null;
+		// Iterates through the player list in order.
 		for (Player p : players) {
+			// Makes sure the accusing person does not have their own cards returned.
 			if (p.equals(accusingPerson)) {
 				continue;
 			} else {
+				// Updates suggestion with a random card or null if there is no match.
 				suggestion = p.disproveSuggestion(person, room, weapon);
 			}
 			if (suggestion != null) {
+				// If suggestion contains a random card, return it.
 				return suggestion;
 			}
 		}
+		// If no cards are found, return a null suggestion.
 		return suggestion;
 	}
 

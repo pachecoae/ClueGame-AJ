@@ -33,10 +33,9 @@ public class Player {
 
 		String s;
 		String[] arr;
-		String line;
 		int linenum = 0;
 
-		while ((line = reader.readLine()) != null) {
+		while ((reader.readLine()) != null) {
 			s = reader.readLine();
 			arr = s.split(",");
 			// [0] = name, [1] = color, [2] = y-coord, [3] = x-coord
@@ -57,8 +56,9 @@ public class Player {
 	}
 
 	public Card disproveSuggestion(String person, String room, String weapon) {
-
+		// Shuffle the cards so that the returned card is random.
 		Collections.shuffle(myCards);
+		// Make sure that only one card is returned.
 		for (Card c : myCards) {
 			if (c.name == person) {
 				return c;
@@ -68,7 +68,7 @@ public class Player {
 				return c;
 			}
 		}
-
+		// If there are no matches, return null.
 		return null;
 	}
 

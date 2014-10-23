@@ -14,8 +14,6 @@ import clueGame.Card;
 import clueGame.Card.CardType;
 import clueGame.ClueGame;
 import clueGame.ComputerPlayer;
-import clueGame.HumanPlayer;
-import clueGame.Player;
 import clueGame.Solution;
 
 public class GameActionTests {
@@ -26,9 +24,7 @@ public class GameActionTests {
 	private static Card dungeon;
 	private static Card missScarlet;
 
-	private static HumanPlayer human;
 	private static ComputerPlayer ai0;
-	private static ComputerPlayer ai1;
 
 	// private static Solution gameSolution;
 
@@ -39,9 +35,7 @@ public class GameActionTests {
 		rope = new Card("Rope", CardType.WEAPON);
 		dungeon = new Card("Dungeon", CardType.ROOM);
 
-		human = new HumanPlayer("Professor Plum", "Purple", 0, 6);
 		ai0 = new ComputerPlayer("Mrs. White", "White", 0, 11);
-		ai1 = new ComputerPlayer("Mr. Green", "Green", 0, 16);
 	}
 
 	@Before
@@ -223,16 +217,20 @@ public class GameActionTests {
 		ai0.currentRoom = 'D';
 		List<Card> cardList = ai0.createSuggestion();
 
+		// Make sure that the returned suggestion is three cards: a player, weapon, and room.
 		Assert.assertEquals(3, cardList.size());
 		Assert.assertTrue(cardList.contains(profPlum));
 		Assert.assertTrue(cardList.contains(rope));
 		Assert.assertTrue(cardList.contains(dungeon));
 
+		// Create a new set of unseen cards.
 		unseenCards.clear();
 		unseenCards.add(missScarlet);
 		unseenCards.add(profPlum);
 		unseenCards.add(rope);
 
+		// Iterate through until both plum and scarlet have been seen, as there is a 50/50 chance that either will be
+		// returned. This guarantees that both will be returned after a certain number of tests.
 		boolean seenPlum = false;
 		boolean seenScarlet = false;
 		for (int i = 0; i < 1000; i++) {
@@ -247,12 +245,14 @@ public class GameActionTests {
 			} else if (cardList.contains(missScarlet)) {
 				seenScarlet = true;
 			} else {
+				// If neither card is returned, the test must fail.
 				Assert.fail("Expected to see either Professor Plum or Miss Scarlet, not neither.");
 			}
 			if (seenPlum == true && seenScarlet == true) {
 				break;
 			}
 		}
+		// By the end of this loop plum and scarlet should have been seen at least once each.
 		Assert.assertTrue(seenPlum);
 		Assert.assertTrue(seenScarlet);
 
