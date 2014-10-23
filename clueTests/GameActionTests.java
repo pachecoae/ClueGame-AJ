@@ -70,29 +70,6 @@ public class GameActionTests {
 		Assert.assertFalse(game.checkAccusation(wrongRoom));
 	}
 
-	// - Disprove a suggestion. Tests include:
-
-	// - Tests that one player returns the only possible card (one person, one room, one weapon).
-
-	// - A test that one player randomly chooses between two possible cards.
-
-	// - A test that players are queried in order:
-	// - made a suggestion which no players could disprove, and ensured that null was returned.
-	// - made a suggestion that only the human could disprove, and ensured that the correct Card
-	// was returned.
-	// - I ensured that if the person who made the suggestion was the only one who could disprove
-	// it, null was returned. This may require either a setter for whose turn it is or passing
-	// the current player into the Board's handleSuggestion method. I tested this for both the
-	// human and a computer player as the current player.
-	// - To test the order that players are queried, I set up a suggestion that two players could
-	// disprove. I ensure that the first person does the disproving (where "first" depends on the
-	// order in the players list). I also set up a test where the furthest person from the
-	// accuser is the one who can disprove, to ensure that all players are queried.
-
-	// - Tests involving the human player.
-
-	// - A test that the player whose turn it is does not return a card.
-
 	@Test
 	public void testDisproveSuggestion() {
 		// Setting up the game's solution
@@ -175,15 +152,15 @@ public class GameActionTests {
 
 		// Test that all players are queried in order. -- use handleSuggestion
 
-		// - made a suggestion which no players could disprove, and ensured that null was returned.
+		// Made a suggestion which no players could disprove, and ensured that null was returned.
 		Assert.assertNull(game.handleSuggestion(profPlum.name, conservatory.name, knife.name, game.players.get(0)));
 
-		// - made a suggestion that only the human could disprove, and ensured that the correct card was returned.
+		// Made a suggestion that only the human could disprove, and ensured that the correct card was returned.
 		game.players.get(0).setCards(cardSet);
 		Assert.assertEquals(profPlum, game.handleSuggestion(profPlum.name, "test", "test", game.players.get(1)));
 		game.players.get(0).setCards(emptySet);
 
-		// - I ensured that if the person who made the suggestion was the only one who could disprove it, null was
+		// I ensured that if the person who made the suggestion was the only one who could disprove it, null was
 		// returned. This may require either a setter for whose turn it is or passing the current player into the
 		// Board's handleSuggestion method. I tested this for both the human and a computer player as the current
 		// player.
@@ -191,7 +168,7 @@ public class GameActionTests {
 		Assert.assertNull(game.handleSuggestion(profPlum.name, conservatory.name, knife.name, game.players.get(0)));
 		game.players.get(0).setCards(emptySet);
 
-		// - To test the order that players are queried, I set up a suggestion that two players could disprove. I ensure
+		// To test the order that players are queried, I set up a suggestion that two players could disprove. I ensure
 		// that the first person does the disproving (where "first" depends on the order in the players list).
 		List<Card> cardSetKnife = new ArrayList<>();
 		cardSetKnife.add(knife);
@@ -208,29 +185,8 @@ public class GameActionTests {
 		// I also set up a test where the furthest person from the accuser is the one who can disprove, to ensure that
 		// all players are queried.
 		game.players.get(5).setCards(cardSetPlum);
-		Assert.assertEquals(knife, game.handleSuggestion(profPlum.name, "test", "test", game.players.get(0)));
+		Assert.assertEquals(profPlum, game.handleSuggestion(profPlum.name, "test", "test", game.players.get(0)));
 	}
-
-	// Test that all players are queried in order. -- use handleSuggestion
-	// game.players.get(5).setCards(cardSet);
-	// game.turn = 0;
-	// for (int i = 1; i < game.players.size(); i++) {
-	// Card suggestion = game.players.get(i).disproveSuggestion("Professor Plum", "Billiard Room", "Rope");
-	// if (i < game.players.size() - 1) {
-	// Assert.assertNull(suggestion);
-	// } else {
-	// Assert.assertEquals(profPlum, suggestion);
-	// }
-	// }
-	// game.players.get(5).setCards(emptySet);
-
-	// - Select a target. Tests include:
-
-	// - A set of targets that include a room.
-
-	// - A random selection from a set of targets that don't include a room.
-
-	// - A test that considers the last visited room.
 
 	@Test
 	public void selectTarget() {

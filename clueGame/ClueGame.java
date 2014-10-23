@@ -135,8 +135,7 @@ public class ClueGame {
 			// Should have 2 parts per line
 			if (parts.length != 2) {
 				fileIn.close();
-				throw new BadConfigFormatException(
-						"Room config has too many arguments on one line!");
+				throw new BadConfigFormatException("Room config has too many arguments on one line!");
 			}
 
 			// Make sure first part is a char
@@ -204,7 +203,19 @@ public class ClueGame {
 	}
 
 	public Card handleSuggestion(String person, String room, String weapon, Player accusingPerson) {
-		return new Card("Professor Plum", CardType.PERSON);
+		List<Card> totalMatches = new ArrayList<>();
+		Card suggestion = null;
+		for (Player p : players) {
+			if (p.equals(accusingPerson)) {
+				continue;
+			} else {
+				suggestion = p.disproveSuggestion(person, room, weapon);
+			}
+			if (suggestion != null) {
+				return suggestion;
+			}
+		}
+		return suggestion;
 	}
 
 	// Checks to see if the solution's person, weapon, and room names are the same as the accused
