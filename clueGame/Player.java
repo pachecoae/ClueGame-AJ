@@ -38,13 +38,13 @@ public class Player {
 
 		while ((line = reader.readLine()) != null) {
 			s = reader.readLine();
-			arr = s.split(","); // [0] = name, [1] = color, [2] = y-coord, [3] =
-			// x-coord
+			arr = s.split(",");
+			// [0] = name, [1] = color, [2] = y-coord, [3] = x-coord
 			int yCoord = Integer.parseInt(arr[2]);
 			int xCoord = Integer.parseInt(arr[3]);
 
-			if (linenum == 0) { // The first player in the file will be the
-				// human player.
+			if (linenum == 0) {
+				// The first player in the file will be the human player.
 				humPlayer = new HumanPlayer(arr[0], arr[1], yCoord, xCoord);
 				playerList.add(humPlayer);
 			} else {

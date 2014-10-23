@@ -203,8 +203,8 @@ public class ClueGame {
 
 	}
 
-	public void handleSuggestion(String person, String room, String weapon, Player accusingPerson) {
-
+	public Card handleSuggestion(String person, String room, String weapon, Player accusingPerson) {
+		return new Card("Professor Plum", CardType.PERSON);
 	}
 
 	// Checks to see if the solution's person, weapon, and room names are the same as the accused

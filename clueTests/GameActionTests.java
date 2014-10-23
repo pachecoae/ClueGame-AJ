@@ -76,7 +76,18 @@ public class GameActionTests {
 
 	// - A test that one player randomly chooses between two possible cards.
 
-	// - A test that players are queried in order.
+	// - A test that players are queried in order:
+	// - made a suggestion which no players could disprove, and ensured that null was returned.
+	// - made a suggestion that only the human could disprove, and ensured that the correct Card
+	// was returned.
+	// - I ensured that if the person who made the suggestion was the only one who could disprove
+	// it, null was returned. This may require either a setter for whose turn it is or passing
+	// the current player into the Board's handleSuggestion method. I tested this for both the
+	// human and a computer player as the current player.
+	// - To test the order that players are queried, I set up a suggestion that two players could
+	// disprove. I ensure that the first person does the disproving (where "first" depends on the
+	// order in the players list). I also set up a test where the furthest person from the
+	// accuser is the one who can disprove, to ensure that all players are queried.
 
 	// - Tests involving the human player.
 
@@ -87,7 +98,7 @@ public class GameActionTests {
 		// Setting up the game's solution
 		game.solution = new Solution("Mr. Green", "Rope", "Hall");
 
-		ComputerPlayer Frank = new ComputerPlayer("Professor Plum", "Purple", 0, 0);
+		ComputerPlayer frank = new ComputerPlayer("Professor Plum", "Purple", 0, 0);
 
 		Card knife = new Card("Knife", CardType.WEAPON);
 		Card wrench = new Card("Wrench", CardType.WEAPON);
@@ -96,27 +107,34 @@ public class GameActionTests {
 		Card conservatory = new Card("Conservatory", CardType.ROOM);
 		Card kitchen = new Card("Kitchen", CardType.ROOM);
 
-		List<Card> Frankscards;
+		List<Card> cardSet;
+		List<Card> emptySet = new ArrayList<>();
 
-		Frankscards = Frank.getCards();
-		Frankscards.add(knife);
-		Frankscards.add(wrench);
-		Frankscards.add(profPlum);
-		Frankscards.add(mrsWhite);
-		Frankscards.add(conservatory);
-		Frankscards.add(kitchen);
+		cardSet = frank.getCards();
+		cardSet.add(knife);
+		cardSet.add(wrench);
+		cardSet.add(profPlum);
+		cardSet.add(mrsWhite);
+		cardSet.add(conservatory);
+		cardSet.add(kitchen);
 
-		Frank.setCards(Frankscards);
+		// Test for when 1 card in human or computer player's hand disproves the suggestion
+		// Set up human player with cards first:
+		game.players.get(0).setCards(cardSet);
+		Assert.assertEquals(profPlum, game.players.get(0).disproveSuggestion("Professor Plum", "Billiard Room", "Rope"));
+		game.players.get(0).setCards(emptySet);
 
-		// Test for when 1 card in "Frank's" hand disproves the suggestion
-		Assert.assertEquals(profPlum, Frank.disproveSuggestion("Professor Plum", "Billiard Room", "Rope"));
+		// Computer Player
+		frank.setCards(cardSet);
+		Assert.assertEquals(profPlum, frank.disproveSuggestion("Professor Plum", "Billiard Room", "Rope"));
+		frank.setCards(emptySet);
 
-		// Test for when 2 cards in "Frank's" hand disproves the suggestion
-
+		// Test for when 2 cards in computer player's hand disproves the suggestion
+		frank.setCards(cardSet);
 		boolean seenPlum = false;
 		boolean seenConservatory = false;
 		for (int i = 0; i < 1000; i++) {
-			Card disprove = Frank.disproveSuggestion("Professor Plum", "Conservatory", "Rope");
+			Card disprove = frank.disproveSuggestion("Professor Plum", "Conservatory", "Rope");
 			Assert.assertNotNull(disprove);
 			if (disprove.equals(profPlum)) {
 				seenPlum = true;
@@ -131,52 +149,80 @@ public class GameActionTests {
 		}
 		Assert.assertTrue(seenPlum);
 		Assert.assertTrue(seenConservatory);
+		frank.setCards(emptySet);
 
-		// Test that all players are queried in order.
-		game.players.get(5).setCards(Frank.getCards());
-		game.turn = 0;
-		for (int i = 1; i < game.players.size(); i++) {
-			Card suggestion = game.players.get(i).disproveSuggestion("Professor Plum", "Billiard Room", "Rope");
-			if (i < game.players.size() - 1) {
-				Assert.assertNull(suggestion);
+		// Test for when 2 cards in human player's hand disproves the suggestion
+		game.players.get(0).setCards(cardSet);
+		seenPlum = false;
+		seenConservatory = false;
+		for (int i = 0; i < 1000; i++) {
+			Card disprove = game.players.get(0).disproveSuggestion("Professor Plum", "Conservatory", "Rope");
+			Assert.assertNotNull(disprove);
+			if (disprove.equals(profPlum)) {
+				seenPlum = true;
+			} else if (disprove.equals(conservatory)) {
+				seenConservatory = true;
 			} else {
-				Assert.assertEquals(profPlum, suggestion);
+				Assert.fail("Expected to see either Professor Plum or the Conservatory, not neither.");
+			}
+			if (seenPlum == true && seenConservatory == true) {
+				break;
 			}
 		}
+		Assert.assertTrue(seenPlum);
+		Assert.assertTrue(seenConservatory);
+		game.players.get(0).setCards(emptySet);
 
+		// Test that all players are queried in order. -- use handleSuggestion
+
+		// - made a suggestion which no players could disprove, and ensured that null was returned.
+		Assert.assertNull(game.handleSuggestion(profPlum.name, conservatory.name, knife.name, game.players.get(0)));
+
+		// - made a suggestion that only the human could disprove, and ensured that the correct card was returned.
+		game.players.get(0).setCards(cardSet);
+		Assert.assertEquals(profPlum, game.handleSuggestion(profPlum.name, "test", "test", game.players.get(1)));
+		game.players.get(0).setCards(emptySet);
+
+		// - I ensured that if the person who made the suggestion was the only one who could disprove it, null was
+		// returned. This may require either a setter for whose turn it is or passing the current player into the
+		// Board's handleSuggestion method. I tested this for both the human and a computer player as the current
+		// player.
+		game.players.get(0).setCards(cardSet);
+		Assert.assertNull(game.handleSuggestion(profPlum.name, conservatory.name, knife.name, game.players.get(0)));
+		game.players.get(0).setCards(emptySet);
+
+		// - To test the order that players are queried, I set up a suggestion that two players could disprove. I ensure
+		// that the first person does the disproving (where "first" depends on the order in the players list).
+		List<Card> cardSetKnife = new ArrayList<>();
+		cardSetKnife.add(knife);
+		List<Card> cardSetPlum = new ArrayList<>();
+		cardSetPlum.add(profPlum);
+
+		game.players.get(1).setCards(cardSetKnife);
+		game.players.get(2).setCards(cardSetPlum);
+		Assert.assertEquals(knife, game.handleSuggestion(profPlum.name, knife.name, "test", game.players.get(0)));
+		game.players.get(0).setCards(emptySet);
+		game.players.get(1).setCards(emptySet);
+		game.players.get(2).setCards(emptySet);
+
+		// I also set up a test where the furthest person from the accuser is the one who can disprove, to ensure that
+		// all players are queried.
+		game.players.get(5).setCards(cardSetPlum);
+		Assert.assertEquals(knife, game.handleSuggestion(profPlum.name, "test", "test", game.players.get(0)));
 	}
 
-	// @Test
-	// public void disproveSuggestion() {
-	// // Solution solution = new Solution();
-	// // solution.setPerson(profPlum.name);
-	// // solution.setRoom(dungeon.name);
-	// // solution.setWeapon(rope.name);
-	//
-	// // Tests that one player returns the only possible card (one person, one room, one weapon).
-	//
-	// // ComputerPlayer.unseen.add(profPlum);
-	// // Assert.assertTrue(ai0.createSuggestion().contains(profPlum));
-	// // Assert.assertTrue(ai0.createSuggestion().contains(rope));
-	// // Assert.assertTrue(ai0.createSuggestion().contains(dungeon));
-	//
-	// // A test that one player randomly chooses between two possible cards.
-	//
-	// // ComputerPlayer.unseen.clear();
-	// // ComputerPlayer.unseen.add(profPlum);
-	// // ComputerPlayer.unseen.add(missScarlet);
-	//
-	// // Assert.assertTrue(ai0.createSuggestion().contains(profPlum) ||
-	// // ai0.createSuggestion().contains(missScarlet);
-	// // Assert.assertTrue(ai0.createSuggestion().contains(rope));
-	// // Assert.assertTrue(ai0.createSuggestion().contains(dungeon));
-	//
-	// // A test that players are queried in order.
-	//
-	// // Tests involving the human player.
-	//
-	// // A test that the player whose turn it is does not return a card.
+	// Test that all players are queried in order. -- use handleSuggestion
+	// game.players.get(5).setCards(cardSet);
+	// game.turn = 0;
+	// for (int i = 1; i < game.players.size(); i++) {
+	// Card suggestion = game.players.get(i).disproveSuggestion("Professor Plum", "Billiard Room", "Rope");
+	// if (i < game.players.size() - 1) {
+	// Assert.assertNull(suggestion);
+	// } else {
+	// Assert.assertEquals(profPlum, suggestion);
 	// }
+	// }
+	// game.players.get(5).setCards(emptySet);
 
 	// - Select a target. Tests include:
 
