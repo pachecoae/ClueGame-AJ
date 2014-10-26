@@ -7,6 +7,7 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Scanner;
@@ -31,48 +32,72 @@ public class Board extends JPanel {
 	private static Map<Character, String> rooms;
 	private Set<BoardCell> targetList;
 	private Map<BoardCell, LinkedList<BoardCell>> adjList;
-	
+
 	private ArrayList<Player> players;
 
 	public void drawFrame() {
 		// Create a JFrame
 		JFrame f = new JFrame();
-		f.setSize(1000, 1000);
+		f.setSize(750, 750);
 		f.setTitle("Clue Board");
 
 		// Add JPanel to your JFrame (often to the CENTER)
 		JPanel panel = new JPanel();
 		f.add(panel, BorderLayout.CENTER);
 		f.setJMenuBar(createMenuBar());
-		f.repaint();
-		
+
 		// Necessary at end
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		f.setContentPane(this);
 		f.setVisible(true);
+		f.repaint();
 	}
-	
-    public JMenuBar createMenuBar() {
-        JMenuBar menuBar;
-        JMenu menu;
-        JMenuItem menuItem;
- 
-        //Create the menu bar.
-        menuBar = new JMenuBar();
- 
-        //Build the first menu.
-        menu = new JMenu("A Menu");
-        menuBar.add(menu);
- 
-        //a group of JMenuItems
-        menuItem = new JMenuItem("Show Detective Notes");
-        menu.add(menuItem);
-        
-        menuItem = new JMenuItem("Exit");
-        menu.add(menuItem);
- 
-        return menuBar;
-    }
+
+	public JMenuBar createMenuBar() {
+		JMenuBar menuBar;
+		JMenu menu;
+		JMenuItem menuItem;
+
+		// Create the menu bar.
+		menuBar = new JMenuBar();
+
+		// Build the first menu.
+		menu = new JMenu("A Menu");
+		menuBar.add(menu);
+
+		// a group of JMenuItems
+		menuItem = new JMenuItem("Show Detective Notes");
+		menu.add(menuItem);
+
+		menuItem = new JMenuItem("Exit");
+		menu.add(menuItem);
+
+		return menuBar;
+	}
+
+	public void drawNames(Graphics g) {
+		g.drawString("Dungeon", 30, 30);
+		g.drawString("Bedroom", 30, 10 * 30);
+		g.drawString("Library", 2 * 30, 18 * 30);
+		g.drawString("Bathroom", 8 * 30 - 20, 10 * 30);
+		g.drawString("Theatre", 8 * 30, 18 * 30);
+		g.drawString("Study", 21 * 30, 13 * 30);
+		g.drawString("Kitchen", 8 * 30, 1 * 30);
+		g.drawString("Workshop", 18 * 30, 1 * 30);
+		g.drawString("Dining Room", 12 * 30, 5 * 30);
+		g.drawString("Closet", 13 * 30, 9 * 30);
+	}
+
+	public ArrayList<String> getRoomNames() {
+		ArrayList<String> roomNames = new ArrayList<>();
+		Iterator it = rooms.entrySet().iterator();
+		while (it.hasNext()) {
+			Map.Entry pairs = (Map.Entry) it.next();
+			roomNames.add((String) pairs.getValue());
+			it.remove(); // avoids a ConcurrentModificationException
+		}
+		return roomNames;
+	}
 
 	// In that class, override paintComponent(Graphics g) method.
 	@Override
@@ -89,10 +114,12 @@ public class Board extends JPanel {
 				board[i][j].draw(g, this);
 			}
 		}
-		
+
 		for (Player p : players) {
 			p.draw(g);
 		}
+
+		drawNames(g);
 	}
 
 	public void loadBoardConfig(String mapFile) throws FileNotFoundException, BadConfigFormatException {
@@ -267,6 +294,6 @@ public class Board extends JPanel {
 
 	public void setPlayers(ArrayList<Player> players) {
 		this.players = players;
-		
+
 	}
 }
