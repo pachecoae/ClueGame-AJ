@@ -25,6 +25,7 @@ public class GameActionTests {
 	private static Card missScarlet;
 
 	private static ComputerPlayer ai0;
+	private static ComputerPlayer frank;
 
 	// private static Solution gameSolution;
 
@@ -35,7 +36,7 @@ public class GameActionTests {
 		rope = new Card("Rope", CardType.WEAPON);
 		dungeon = new Card("Dungeon", CardType.ROOM);
 
-		ai0 = new ComputerPlayer("Mrs. White", "White", 0, 11);
+		ai0 = new ComputerPlayer("Mrs. White", ai0.convertColor("White"), 0, 11);
 	}
 
 	@Before
@@ -69,7 +70,7 @@ public class GameActionTests {
 		// Setting up the game's solution
 		game.solution = new Solution("Mr. Green", "Rope", "Hall");
 
-		ComputerPlayer frank = new ComputerPlayer("Professor Plum", "Purple", 0, 0);
+		frank = new ComputerPlayer("Professor Plum", frank.convertColor("Purple"), 0, 0);
 
 		Card knife = new Card("Knife", CardType.WEAPON);
 		Card wrench = new Card("Wrench", CardType.WEAPON);

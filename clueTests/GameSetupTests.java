@@ -29,9 +29,9 @@ public class GameSetupTests {
 		rope = new Card("Rope", CardType.WEAPON);
 		hall = new Card("Hall", CardType.ROOM);
 
-		human = new HumanPlayer("Professor Plum", "Purple", 0, 6);
-		ai0 = new ComputerPlayer("Mrs. White", "White", 0, 11);
-		ai1 = new ComputerPlayer("Mr. Green", "Green", 0, 16);
+		human = new HumanPlayer("Professor Plum", human.convertColor("Purple"), 0, 6);
+		ai0 = new ComputerPlayer("Mrs. White", ai0.convertColor("White"), 0, 11);
+		ai1 = new ComputerPlayer("Mr. Green", ai1.convertColor("Green"), 0, 16);
 	}
 
 	@Before

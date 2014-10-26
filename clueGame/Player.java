@@ -1,9 +1,7 @@
 package clueGame;
 
 import java.awt.Color;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.awt.Graphics;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -13,46 +11,29 @@ import java.util.List;
 public class Player {
 	private String name;
 	private List<Card> myCards;
-	private String color;
+	private Color color;
 	protected int col;
+	protected int pixelCol;
 	protected int row;
+	protected int pixelRow;
+	protected static final int circleDim = 30;
 
-	public Player(String name, String color, int row, int col) {
+	public Player(String name, Color color, int row, int col) {
 		this.name = name;
 		this.color = color;
 		this.row = row;
+		this.pixelRow = col * 30;
 		this.col = col;
+		this.pixelCol = row * 30;
 		myCards = new ArrayList<>();
+
 	}
 
-	public void loadPlayers(String filename) throws NumberFormatException, IOException {
-		BufferedReader reader = new BufferedReader(new FileReader(filename));
-		ArrayList<Player> playerList = new ArrayList<Player>();
-		ComputerPlayer compPlayer;
-		HumanPlayer humPlayer;
-
-		String s;
-		String[] arr;
-		int linenum = 0;
-
-		while ((reader.readLine()) != null) {
-			s = reader.readLine();
-			arr = s.split(",");
-			// [0] = name, [1] = color, [2] = y-coord, [3] = x-coord
-			int yCoord = Integer.parseInt(arr[2]);
-			int xCoord = Integer.parseInt(arr[3]);
-
-			if (linenum == 0) {
-				// The first player in the file will be the human player.
-				humPlayer = new HumanPlayer(arr[0], arr[1], yCoord, xCoord);
-				playerList.add(humPlayer);
-			} else {
-				compPlayer = new ComputerPlayer(arr[0], arr[1], yCoord, xCoord);
-				playerList.add(compPlayer);
-			}
-			linenum++;
-		}
-		reader.close();
+	public void draw(Graphics g) {
+		g.setColor(getColor());
+		g.fillOval(getPixelRow(), getPixelCol(), circleDim, circleDim);
+		g.setColor(Color.BLACK);
+		g.drawOval(getPixelRow(), getPixelCol(), circleDim, circleDim);
 	}
 
 	public Card disproveSuggestion(String person, String room, String weapon) {
@@ -84,16 +65,24 @@ public class Player {
 		return name;
 	}
 
-	public Color convertColor(String strColor) {
-		Color color;
-		try {
-			// We can use reflection to convert the string to a color
-			Field field = Class.forName("java.awt.Color").getField(strColor.trim());
-			color = (Color) field.get(null);
-		} catch (Exception e) {
-			color = null; // Not defined }
-		}
+	public Color getColor() {
 		return color;
+	}
+
+	public int getCol() {
+		return col;
+	}
+
+	public int getRow() {
+		return row;
+	}
+
+	public int getPixelCol() {
+		return pixelCol;
+	}
+
+	public int getPixelRow() {
+		return pixelRow;
 	}
 
 	@Override
@@ -105,6 +94,18 @@ public class Player {
 		result = prime * result + col;
 		result = prime * result + row;
 		return result;
+	}
+
+	public Color convertColor(String strColor) {
+		Color color;
+		try {
+			// We can use reflection to convert the string to a color
+			Field field = Class.forName("java.awt.Color").getField(strColor.trim());
+			color = (Color) field.get(null);
+		} catch (Exception e) {
+			color = null; // Not defined }
+		}
+		return color;
 	}
 
 	@Override

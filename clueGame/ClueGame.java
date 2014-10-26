@@ -1,9 +1,11 @@
 package clueGame;
 
+import java.awt.Color;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -11,16 +13,21 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
+import javax.swing.JFrame;
+
 import clueGame.Card.CardType;
 
-public class ClueGame {
+// Trying to draw players into the board based on cell location...
+
+public class ClueGame extends JFrame {
+	private static final long serialVersionUID = 1L;
 	private Map<Character, String> rooms;
 	private Board board;
 	private String mapFile;
 	private String legendFile;
 	private String playerFile;
 	private String deckFile;
-	public List<Player> players;
+	public ArrayList<Player> players;
 	private List<Card> deck;
 	public Solution solution;
 	public int turn;
@@ -76,16 +83,17 @@ public class ClueGame {
 
 			if (linenum == 0) {
 				// The first player in the file will be the human player.
-				humPlayer = new HumanPlayer(lineArray[0], lineArray[1], yCoord, xCoord);
+				humPlayer = new HumanPlayer(lineArray[0], convertColor(lineArray[1]), yCoord, xCoord);
 				players.add(humPlayer);
 			} else {
 				// All other players will be computer players
-				compPlayer = new ComputerPlayer(lineArray[0], lineArray[1], yCoord, xCoord);
+				compPlayer = new ComputerPlayer(lineArray[0], convertColor(lineArray[1]), yCoord, xCoord);
 				players.add(compPlayer);
 			}
 			linenum++;
 		}
 		reader.close();
+		board.setPlayers(this.players);
 	}
 
 	// This method generates the deck of cards from a text file
@@ -195,7 +203,8 @@ public class ClueGame {
 
 	}
 
-	// Method that queries players in order that they appear in the player list and checks if they have the suggested cards.
+	// Method that queries players in order that they appear in the player list and checks if they have the suggested
+	// cards.
 	public Card handleSuggestion(String person, String room, String weapon, Player accusingPerson) {
 		// Create a null suggestion to be filled in for loop or returned if no card is found.
 		Card suggestion = null;
@@ -232,4 +241,22 @@ public class ClueGame {
 		return true;
 	}
 
+	public Color convertColor(String strColor) {
+		Color color;
+		try {
+			// We can use reflection to convert the string to a color
+			Field field = Class.forName("java.awt.Color").getField(strColor.trim());
+			color = (Color) field.get(null);
+		} catch (Exception e) {
+			color = null; // Not defined }
+		}
+		return color;
+	}
+
+	public static void main(String[] args) {
+		ClueGame game = new ClueGame("ClueLayoutStudents.csv", "roomConfig.txt", "Cards.txt", "PlayerCards.txt");
+		game.loadConfigFiles();
+		Board board = game.getBoard();
+		board.drawFrame();
+	}
 }

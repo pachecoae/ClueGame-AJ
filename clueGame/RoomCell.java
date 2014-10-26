@@ -1,5 +1,8 @@
 package clueGame;
 
+import java.awt.Color;
+import java.awt.Graphics;
+
 public class RoomCell extends BoardCell {
 	public enum DoorDirection {
 		UP, DOWN, LEFT, RIGHT, NONE
@@ -60,5 +63,41 @@ public class RoomCell extends BoardCell {
 
 	public char getInitial() {
 		return initial;
+	}
+
+	@Override
+	void draw(Graphics g, Board b) {
+		int row = getPixelRow();
+		int col = getPixelCol();
+		if (isRoom()) {
+			if (getDoorDirection() == DoorDirection.UP) {
+				g.setColor(Color.LIGHT_GRAY);
+				g.fillRect(row, col, tileDim, tileDim);
+				g.setColor(Color.BLUE);
+				// ... on the top
+				g.fillRect(row, col, tileDim, 5);
+			} else if (getDoorDirection() == DoorDirection.DOWN) {
+				g.setColor(Color.LIGHT_GRAY);
+				g.fillRect(row, col, tileDim, tileDim);
+				g.setColor(Color.BLUE);
+				// ... on the bottom
+				g.fillRect(row, col + 25, tileDim, 5);
+			} else if (getDoorDirection() == DoorDirection.LEFT) {
+				g.setColor(Color.LIGHT_GRAY);
+				g.fillRect(row, col, tileDim, tileDim);
+				g.setColor(Color.BLUE);
+				// ... on the left
+				g.fillRect(row, col, 5, tileDim);
+			} else if (getDoorDirection() == DoorDirection.RIGHT) {
+				g.setColor(Color.LIGHT_GRAY);
+				g.fillRect(row, col, tileDim, tileDim);
+				g.setColor(Color.BLUE);
+				// ... on the right
+				g.fillRect(row + 25, col, 5, tileDim);
+			} else {
+				g.setColor(Color.LIGHT_GRAY);
+				g.fillRect(row, col, tileDim, tileDim);
+			}
+		}
 	}
 }

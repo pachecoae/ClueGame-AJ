@@ -1,5 +1,6 @@
 package clueGame;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -10,7 +11,7 @@ public class ComputerPlayer extends Player {
 	public static List<Card> unseen = new ArrayList<>();
 	public char currentRoom;
 
-	public ComputerPlayer(String name, String color, int yCoord, int xCoord) {
+	public ComputerPlayer(String name, Color color, int yCoord, int xCoord) {
 		super(name, color, yCoord, xCoord);
 	}
 

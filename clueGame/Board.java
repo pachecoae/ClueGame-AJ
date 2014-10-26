@@ -1,7 +1,10 @@
 package clueGame;
 
+import java.awt.BorderLayout;
+import java.awt.Graphics;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -9,9 +12,16 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
 
+import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JPanel;
+
 import clueGame.RoomCell.DoorDirection;
 
-public class Board {
+public class Board extends JPanel {
+	private static final long serialVersionUID = 1L;
 	public static int MAX_ROWS = 50;
 	public static int MAX_COLS = 50;
 	private int numRows;
@@ -21,9 +31,71 @@ public class Board {
 	private static Map<Character, String> rooms;
 	private Set<BoardCell> targetList;
 	private Map<BoardCell, LinkedList<BoardCell>> adjList;
+	
+	private ArrayList<Player> players;
 
-	public void loadBoardConfig(String mapFile) throws FileNotFoundException,
-			BadConfigFormatException {
+	public void drawFrame() {
+		// Create a JFrame
+		JFrame f = new JFrame();
+		f.setSize(1000, 1000);
+		f.setTitle("Clue Board");
+
+		// Add JPanel to your JFrame (often to the CENTER)
+		JPanel panel = new JPanel();
+		f.add(panel, BorderLayout.CENTER);
+		f.setJMenuBar(createMenuBar());
+		f.repaint();
+		
+		// Necessary at end
+		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		f.setContentPane(this);
+		f.setVisible(true);
+	}
+	
+    public JMenuBar createMenuBar() {
+        JMenuBar menuBar;
+        JMenu menu;
+        JMenuItem menuItem;
+ 
+        //Create the menu bar.
+        menuBar = new JMenuBar();
+ 
+        //Build the first menu.
+        menu = new JMenu("A Menu");
+        menuBar.add(menu);
+ 
+        //a group of JMenuItems
+        menuItem = new JMenuItem("Show Detective Notes");
+        menu.add(menuItem);
+        
+        menuItem = new JMenuItem("Exit");
+        menu.add(menuItem);
+ 
+        return menuBar;
+    }
+
+	// In that class, override paintComponent(Graphics g) method.
+	@Override
+	public void paintComponent(Graphics g) {
+		// Inside the method, use draw commands as needed to create your image.
+		// paintComponent will be called automatically when the screen needs to be redrawn (first displayed, minimized,
+		// maximized).
+		// Inside paintComponent, call super.paintComponent for required housekeeping.
+		super.paintComponent(g);
+		// If you need to update the drawing, do not call paintComponent directly. Instead call repaint().
+
+		for (int i = 0; i < numRows; i++) {
+			for (int j = 0; j < numColumns; j++) {
+				board[i][j].draw(g, this);
+			}
+		}
+		
+		for (Player p : players) {
+			p.draw(g);
+		}
+	}
+
+	public void loadBoardConfig(String mapFile) throws FileNotFoundException, BadConfigFormatException {
 		board = new BoardCell[MAX_ROWS][MAX_COLS];
 		FileReader reader = new FileReader(mapFile);
 		Scanner fileIn = new Scanner(reader);
@@ -32,6 +104,7 @@ public class Board {
 		numColumns = 0;
 
 		// Read board configuration file line by line
+
 		while (fileIn.hasNextLine()) {
 			// Read the first line
 			String newLine = fileIn.nextLine();
@@ -145,7 +218,6 @@ public class Board {
 				findAllTargets(c, moves - 1);
 			visited.remove(c);
 		}
-
 	}
 
 	public LinkedList<BoardCell> nonVisitedAdjCells(BoardCell cell) {
@@ -193,4 +265,8 @@ public class Board {
 		Board.rooms = rooms;
 	}
 
+	public void setPlayers(ArrayList<Player> players) {
+		this.players = players;
+		
+	}
 }
