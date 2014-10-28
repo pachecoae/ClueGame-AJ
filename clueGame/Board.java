@@ -7,7 +7,6 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Scanner;
@@ -32,8 +31,8 @@ public class Board extends JPanel {
 	private static Map<Character, String> rooms;
 	private Set<BoardCell> targetList;
 	private Map<BoardCell, LinkedList<BoardCell>> adjList;
-
 	private ArrayList<Player> players;
+	private myDialog dialog;
 
 	public void drawFrame() {
 		// Create a JFrame
@@ -45,10 +44,13 @@ public class Board extends JPanel {
 		JPanel panel = new JPanel();
 		f.add(panel, BorderLayout.CENTER);
 		f.setJMenuBar(createMenuBar());
+		
+		dialog = new myDialog();
 
 		// Necessary at end
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		f.setContentPane(this);
+		dialog.setVisible(true);
 		f.setVisible(true);
 		f.repaint();
 	}
@@ -86,17 +88,6 @@ public class Board extends JPanel {
 		g.drawString("Workshop", 18 * 30, 1 * 30);
 		g.drawString("Dining Room", 12 * 30, 5 * 30);
 		g.drawString("Closet", 13 * 30, 9 * 30);
-	}
-
-	public ArrayList<String> getRoomNames() {
-		ArrayList<String> roomNames = new ArrayList<>();
-		Iterator it = rooms.entrySet().iterator();
-		while (it.hasNext()) {
-			Map.Entry pairs = (Map.Entry) it.next();
-			roomNames.add((String) pairs.getValue());
-			it.remove(); // avoids a ConcurrentModificationException
-		}
-		return roomNames;
 	}
 
 	// In that class, override paintComponent(Graphics g) method.

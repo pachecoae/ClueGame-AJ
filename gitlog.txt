@@ -1,3 +1,34 @@
+commit 49d1cc9a7c7755d9b4c12f417d2b5937fe2e4089
+Author: Andre Pacheco <apacheco@mymail.mines.edu>
+Date:   Sat Oct 25 21:18:34 2014 -0600
+
+    Finished writing in names to the rooms.
+
+commit 1b36e44f7d5d269fd3e67e7640149e740cd020c4
+Author: Andre Pacheco <apacheco@mymail.mines.edu>
+Date:   Sat Oct 25 20:42:25 2014 -0600
+
+    Finished drawing the board and menu. Working on drawing room names.
+
+commit 3b6f7ba4cba0ed61b41c9cdb41e9c81db253e76f
+Author: Andre Pacheco <apacheco@mymail.mines.edu>
+Date:   Wed Oct 22 21:56:27 2014 -0600
+
+    Added comments to further explain functions and tests. Also cleaned up code.
+
+commit 2282e08bae7383a496b500e1cb6461c68c3ef834
+Merge: 368c6f8 4d37f72
+Author: Andre Pacheco <apacheco@mymail.mines.edu>
+Date:   Wed Oct 22 21:17:40 2014 -0600
+
+    Merge https://github.com/pachecoae/ClueGame-AJ
+
+commit 368c6f8a49ccef6fe66477efb062c88c04be4a3e
+Author: Andre Pacheco <apacheco@mymail.mines.edu>
+Date:   Wed Oct 22 21:13:40 2014 -0600
+
+    Added files. Ready to push to github.
+
 commit 866979529e57259cfcac06e69826e35699fd03f3
 Author: Andre Pacheco <apacheco@mymail.mines.edu>
 Date:   Wed Oct 22 21:08:08 2014 -0600
@@ -39,3 +70,27 @@ Author: Andre Pacheco <apacheco@mymail.mines.edu>
 Date:   Mon Oct 20 23:33:58 2014 -0600
 
     Finished makeSuggestion test.
+
+commit 4d37f726a0ad553a05f4195bceceac10972f5472
+Author: Fiji <fiji@example.com>
+Date:   Thu Oct 16 20:59:21 2014 -0600
+
+    Added comments to tests and classes.
+
+commit 714884b26b0fda5fcbeda00e01f25f1bc309d78b
+Author: Fiji <fiji@example.com>
+Date:   Thu Oct 16 20:41:29 2014 -0600
+
+    Added configuration files to the repo
+
+commit a2e714b57b565d332d48c67f89249b763535ddf6
+Author: Fiji <fiji@example.com>
+Date:   Thu Oct 16 20:40:32 2014 -0600
+
+    GameActionTests now passing all tests.
+
+commit cda0f95ccee4b4efe7a926a179c674c3a510a673
+Author: Fiji <fiji@example.com>
+Date:   Thu Oct 16 20:02:40 2014 -0600
+
+    Fixed deal, loadCardConfig, loadPlayersConfig, and updated loadConfigFiles. Also fixed tests in GameSetupTests. Now passing all except GameActionTests.
