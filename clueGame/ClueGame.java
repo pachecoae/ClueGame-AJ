@@ -71,11 +71,7 @@ public class ClueGame extends JFrame {
 		int linenum = 0;
 
 		while (reader.hasNextLine()) {
-			// Reads in the line from the file and then splits it into an array where:
-			// lineArray[0] = name
-			// lineArray[1] = color
-			// lineArray[2] = y-coord
-			// lineArray[3] = x-coord
+			// Reads in the line from the file and then splits it into an array where lineArray[0] = name, [1] = color, [2] = y-coord, [3] = x-coord
 			line = reader.nextLine();
 			lineArray = line.split(",");
 			int yCoord = Integer.parseInt(lineArray[2]);
@@ -197,10 +193,6 @@ public class ClueGame extends JFrame {
 
 	public List<Card> getDeck() {
 		return deck;
-	}
-
-	public void selectAnswer() {
-
 	}
 
 	// Method that queries players in order that they appear in the player list and checks if they have the suggested
