@@ -11,8 +11,8 @@ public class ComputerPlayer extends Player {
 	public static List<Card> unseen = new ArrayList<>();
 	public char currentRoom;
 
-	public ComputerPlayer(String name, Color color, int yCoord, int xCoord) {
-		super(name, color, yCoord, xCoord);
+	public ComputerPlayer(String name, Color color, int col, int row) {
+		super(name, color, col, row);
 	}
 
 	// Selects random location for the computer player in the case that there are only walkway cells to choose from.
