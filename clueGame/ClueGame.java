@@ -72,19 +72,22 @@ public class ClueGame extends JFrame {
 
 		while (reader.hasNextLine()) {
 			// Reads in the line from the file and then splits it into an array where lineArray[0] = name, [1] = color,
-			// [2] = y-coord, [3] = x-coord
+			// [2] = col, [3] = row
 			line = reader.nextLine();
 			lineArray = line.split(",");
-			int yCoord = Integer.parseInt(lineArray[2]);
-			int xCoord = Integer.parseInt(lineArray[3]);
+
+			String name = lineArray[0];
+			Color color = convertColor(lineArray[1]);
+			int col = Integer.parseInt(lineArray[2]);
+			int row = Integer.parseInt(lineArray[3]);
 
 			if (linenum == 0) {
 				// The first player in the file will be the human player.
-				humPlayer = new HumanPlayer(lineArray[0], convertColor(lineArray[1]), yCoord, xCoord);
+				humPlayer = new HumanPlayer(name, color, col, row);
 				players.add(humPlayer);
 			} else {
 				// All other players will be computer players
-				compPlayer = new ComputerPlayer(lineArray[0], convertColor(lineArray[1]), yCoord, xCoord);
+				compPlayer = new ComputerPlayer(name, color, col, row);
 				players.add(compPlayer);
 			}
 			linenum++;
