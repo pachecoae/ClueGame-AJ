@@ -165,7 +165,6 @@ public class ClueGame extends JFrame {
 		// int random;
 		int count = 0;
 		List<Card> cardList;
-		// Card randCard;
 
 		Collections.shuffle(deck);
 
@@ -182,8 +181,6 @@ public class ClueGame extends JFrame {
 
 			// Generates a random integer using our random int method, selects a
 			// card at random, and removes the card from the deck
-			// random = randInt(0, deck.size() - 1);
-			// randCard = deck.get(random);
 			cardList.add(deck.get(0));
 			deck.remove(0);
 
@@ -244,7 +241,7 @@ public class ClueGame extends JFrame {
 			Field field = Class.forName("java.awt.Color").getField(strColor.trim());
 			color = (Color) field.get(null);
 		} catch (Exception e) {
-			color = null; // Not defined }
+			color = null; // Not defined
 		}
 		return color;
 	}
