@@ -1,7 +1,5 @@
 package clueTests;
 
-import static org.junit.Assert.*;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -13,10 +11,10 @@ import org.junit.Test;
 
 import clueGame.BoardCell;
 import clueGame.Card;
+import clueGame.Card.CardType;
 import clueGame.ClueGame;
 import clueGame.ComputerPlayer;
 import clueGame.Solution;
-import clueGame.Card.CardType;
 
 public class GameActionTest {
 
