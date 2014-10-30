@@ -57,16 +57,16 @@ public class DetectiveNotes extends JDialog {
 		choice.setSize(150, 25);
 		getContentPane().add(choice);
 
-		JComboBox<String> model = new JComboBox<String>();
-		model.addItem("Professor Plum");
-		model.addItem("Mr. Green");
-		model.addItem("Mrs. White");
-		model.addItem("Mrs. Peacock");
-		model.addItem("Miss Scarlet");
-		model.addItem("ColonelMustard");
-		model.setLocation(400, 40);
-		model.setSize(150, 25);
-		getContentPane().add(model);
+		JComboBox<String> personBox = new JComboBox<String>();
+		personBox.addItem("Professor Plum");
+		personBox.addItem("Mr. Green");
+		personBox.addItem("Mrs. White");
+		personBox.addItem("Mrs. Peacock");
+		personBox.addItem("Miss Scarlet");
+		personBox.addItem("ColonelMustard");
+		personBox.setLocation(400, 40);
+		personBox.setSize(150, 25);
+		getContentPane().add(personBox);
 
 		// Weapons and Buttons
 		JLabel wpn = new JLabel("Weapons");
