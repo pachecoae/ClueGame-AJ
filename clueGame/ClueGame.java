@@ -71,7 +71,8 @@ public class ClueGame extends JFrame {
 		int linenum = 0;
 
 		while (reader.hasNextLine()) {
-			// Reads in the line from the file and then splits it into an array where lineArray[0] = name, [1] = color, [2] = y-coord, [3] = x-coord
+			// Reads in the line from the file and then splits it into an array where lineArray[0] = name, [1] = color,
+			// [2] = y-coord, [3] = x-coord
 			line = reader.nextLine();
 			lineArray = line.split(",");
 			int yCoord = Integer.parseInt(lineArray[2]);
@@ -250,5 +251,7 @@ public class ClueGame extends JFrame {
 		game.loadConfigFiles();
 		Board board = game.getBoard();
 		board.drawFrame();
+		DetectiveNotes gui = new DetectiveNotes();
+		gui.setVisible(true);
 	}
 }

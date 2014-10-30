@@ -32,7 +32,8 @@ public class Board extends JPanel {
 	private Set<BoardCell> targetList;
 	private Map<BoardCell, LinkedList<BoardCell>> adjList;
 	private ArrayList<Player> players;
-	private myDialog dialog;
+
+	// private myDialog dialog;
 
 	public void drawFrame() {
 		// Create a JFrame
@@ -44,13 +45,13 @@ public class Board extends JPanel {
 		JPanel panel = new JPanel();
 		f.add(panel, BorderLayout.CENTER);
 		f.setJMenuBar(createMenuBar());
-		
-		dialog = new myDialog();
+
+		// dialog = new myDialog();
 
 		// Necessary at end
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		f.setContentPane(this);
-		dialog.setVisible(true);
+		// dialog.setVisible(true);
 		f.setVisible(true);
 		f.repaint();
 	}
@@ -160,8 +161,7 @@ public class Board extends JPanel {
 		for (int i = 0; i < numRows; i++) {
 			for (int j = 0; j < numColumns; j++) {
 				BoardCell currentCell = board[i][j];
-				// Simple case, if cell is a doorway then only adj is direction
-				// of doorway
+				// Simple case, if cell is a doorway then only adj is direction of doorway
 				if (currentCell.isDoorway()) {
 					// Convert BoardCell to RoomCell
 					RoomCell currentRoomCell = (RoomCell) currentCell;
