@@ -1,3 +1,69 @@
+commit 076b75b67973ff1ab619076200a4358ad31a9c97
+Author: Andre Pacheco <apacheco@mymail.mines.edu>
+Date:   Wed Oct 29 23:05:24 2014 -0600
+
+    Changed variable name in DetectiveNotes to be more intuitive.
+
+commit 6a0efe44f1451a24cddc6e13ca9b01eca4b81f99
+Author: Andre Pacheco <apacheco@mymail.mines.edu>
+Date:   Wed Oct 29 22:46:51 2014 -0600
+
+    Removed unnecessary overwritten functions (hash functions).
+
+commit a02257da393998e1547d0990fc0cac2ac86f2967
+Author: Andre Pacheco <apacheco@mymail.mines.edu>
+Date:   Wed Oct 29 22:40:16 2014 -0600
+
+    Added GameActionTest and GameSetupTest (revised classes that test our current code).
+
+commit ce534192166378f309813b8dc5c7b098000a79bd
+Author: Andre Pacheco <apacheco@mymail.mines.edu>
+Date:   Wed Oct 29 22:39:16 2014 -0600
+
+    Fixed GameActionTest and GameSetupTest so that we could check all of our revised code and ensure we were still passing all of our tests.
+
+commit 53b4067c820769a3173dad928a5f0efa819c5632
+Author: Andre Pacheco <apacheco@mymail.mines.edu>
+Date:   Wed Oct 29 21:10:31 2014 -0600
+
+    Changed loadPlayersConfig to have better variable names and made it so that HumanPlayer() and ComputerPlayer() took more understandable variables.
+
+commit 6af1161676257b525e1f86a356a91a2f3ad1a679
+Author: Andre Pacheco <apacheco@mymail.mines.edu>
+Date:   Wed Oct 29 21:03:48 2014 -0600
+
+    Changed variable names in HumanPlayer to be more intuitive.
+
+commit 94d9ea6f98ec3da085b76014bcd436a18a0d714d
+Author: Andre Pacheco <apacheco@mymail.mines.edu>
+Date:   Wed Oct 29 21:02:20 2014 -0600
+
+    Changed variable names in ComputerPlayer to be more intuitive.
+
+commit ee757020ea703c8010c94184f74f5c75ecbfc37a
+Author: Andre Pacheco <apacheco@mymail.mines.edu>
+Date:   Wed Oct 29 20:56:14 2014 -0600
+
+    Added DetectiveNotes.java
+
+commit 15249ccb6da81aa37536e5ecc84812fb60378745
+Author: Andre Pacheco <apacheco@mymail.mines.edu>
+Date:   Wed Oct 29 20:55:24 2014 -0600
+
+    Changed the formattingof our detective notes and combined all of our class files into one class file named DetectiveNotes.
+
+commit 3a45844613218b06c5764de4122f8ff98dcfbaf9
+Author: Andre Pacheco <apacheco@mymail.mines.edu>
+Date:   Tue Oct 28 12:02:05 2014 -0600
+
+    Removed a couple methods that were not being used.
+
+commit f860ce1c3a250d2af641d3aea546acc1f2d606d5
+Author: Andre Pacheco <apacheco@mymail.mines.edu>
+Date:   Tue Oct 28 11:16:43 2014 -0600
+
+    Ready to swap.
+
 commit 49d1cc9a7c7755d9b4c12f417d2b5937fe2e4089
 Author: Andre Pacheco <apacheco@mymail.mines.edu>
 Date:   Sat Oct 25 21:18:34 2014 -0600
