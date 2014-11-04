@@ -2,6 +2,8 @@ package clueGame;
 
 import java.awt.BorderLayout;
 import java.awt.Graphics;
+import java.awt.event.MouseListener;
+import java.awt.event.ActionEvent;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
@@ -12,7 +14,9 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
 
+import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -32,22 +36,24 @@ public class Board extends JPanel {
 	private Set<BoardCell> targetList;
 	private Map<BoardCell, LinkedList<BoardCell>> adjList;
 	private ArrayList<Player> players;
+	private DetectiveNotes dNotes = new DetectiveNotes();
 
 	// private myDialog dialog;
 
 	public void drawFrame() {
 		// Create a JFrame
 		JFrame f = new JFrame();
-		f.setSize(750, 750);
+		f.setSize(900, 850);
 		f.setTitle("Clue Board");
+		f.setLayout(null);
 
-		// Add JPanel to your JFrame (often to the CENTER)
+		// Add JPanel to your JFrame
 		JPanel panel = new JPanel();
-		f.add(panel, BorderLayout.CENTER);
-		f.setJMenuBar(createMenuBar());
-
-		// dialog = new myDialog();
-
+		panel.setLocation(0, 0);
+		panel.setSize(750, 750);
+		f.add(panel);
+		f.setJMenuBar(createMenuBar());		
+		
 		// Necessary at end
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		f.setContentPane(this);
@@ -65,15 +71,50 @@ public class Board extends JPanel {
 		menuBar = new JMenuBar();
 
 		// Build the first menu.
-		menu = new JMenu("A Menu");
+		menu = new JMenu("Menu");
 		menuBar.add(menu);
 
-		// a group of JMenuItems
-		menuItem = new JMenuItem("Show Detective Notes");
-		menu.add(menuItem);
+		//Creates the Detective notes for the menu
+		JMenuItem notesAction = new JMenuItem("Detective Notes");
+		notesAction.addMouseListener(new MouseListener(){
+			@Override
+			public void mouseEntered(java.awt.event.MouseEvent e) {}
+			@Override
+			public void mouseExited(java.awt.event.MouseEvent e) {}
+			@Override
+			public void mousePressed(java.awt.event.MouseEvent e){
+				dNotes = new DetectiveNotes();
+				dNotes.setVisible(true);
+			}
+			@Override
+			public void mouseReleased(java.awt.event.MouseEvent e){}
+			@Override
+			public void mouseClicked(java.awt.event.MouseEvent e) {}
+		});
+		
 
-		menuItem = new JMenuItem("Exit");
-		menu.add(menuItem);
+		
+		//Creates the Exit button
+		JMenuItem exitAction = new JMenuItem("Exit");
+		exitAction.addMouseListener(new MouseListener(){
+			@Override
+			public void mouseEntered(java.awt.event.MouseEvent e) {}
+			@Override
+			public void mouseExited(java.awt.event.MouseEvent e) {}
+			@Override
+			public void mousePressed(java.awt.event.MouseEvent e){
+				System.exit(0);
+			}
+			@Override
+			public void mouseReleased(java.awt.event.MouseEvent e){}
+			@Override
+			public void mouseClicked(java.awt.event.MouseEvent e){}
+		});
+		
+		//Adds the objects to the menu
+		menu.add(notesAction);
+		menu.addSeparator();
+		menu.add(exitAction);
 
 		return menuBar;
 	}
@@ -287,4 +328,5 @@ public class Board extends JPanel {
 		this.players = players;
 
 	}
+
 }

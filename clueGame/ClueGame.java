@@ -14,6 +14,7 @@ import java.util.Map;
 import java.util.Scanner;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 import clueGame.Card.CardType;
 
@@ -253,5 +254,7 @@ public class ClueGame extends JFrame {
 		board.drawFrame();
 		DetectiveNotes gui = new DetectiveNotes();
 		gui.setVisible(true);
+		JOptionPane.showMessageDialog(null, "You are Miss Scarlet. Press Next Player to Begin.");
+
 	}
 }
