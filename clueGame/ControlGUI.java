@@ -20,7 +20,6 @@ public class ControlGUI extends JPanel {
 
 	public ControlGUI(ClueGame game) {
 		this.game = game;
-
 		setSize(700, 150);
 		add(comboPanel(), BorderLayout.SOUTH);
 	}
@@ -94,7 +93,8 @@ public class ControlGUI extends JPanel {
 		centerPanel.setLayout(new GridLayout(2, 1));
 		centerPanel.add(name);
 		centerPanel.add(textBox);
-		centerPanel.setBorder(new TitledBorder(new EtchedBorder(), "Guess Result"));
+		centerPanel.setBorder(new TitledBorder(new EtchedBorder(),
+				"Guess Result"));
 		return centerPanel;
 	}
 

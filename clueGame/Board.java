@@ -17,6 +17,7 @@ import java.util.Set;
 import java.util.List;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -38,11 +39,13 @@ public class Board extends JPanel {
 	private JTextField turn;
 	private ClueGame game;
 	private int diceRoll;
+	private boolean badClick;
 
 	// private myDialog dialog;
 
 	public Board(final ClueGame clueGame) {
 		this.game = clueGame;
+		badClick = false;
 		addMouseListener(new MouseListener() {
 
 			@Override
@@ -52,18 +55,7 @@ public class Board extends JPanel {
 
 			@Override
 			public void mousePressed(MouseEvent e) {
-				for (BoardCell b : targetList) {
-					if (e.getY() <= b.getPixelCol() + 30 && e.getY() >= b.getPixelCol()) {
-						if (e.getX() <= b.getPixelRow() + 30 && e.getX() >= b.getPixelRow()) {
-							game.players.get(0).row = b.getRow();
-							game.players.get(0).col = b.getCol();
-							game.players.get(0).pixelRow = b.getPixelRow();
-							game.players.get(0).pixelCol = b.getPixelCol();
-							game.repaint();
-							break;
-						}
-					}
-				}
+
 			}
 
 			@Override
@@ -78,7 +70,28 @@ public class Board extends JPanel {
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
-
+				for (BoardCell b : targetList) {
+					if (e.getY() <= b.getPixelCol() + 30 && e.getY() >= b.getPixelCol()) {
+						if (e.getX() <= b.getPixelRow() + 30 && e.getX() >= b.getPixelRow()) {
+							game.players.get(0).row = b.getRow();
+							game.players.get(0).col = b.getCol();
+							game.players.get(0).pixelRow = b.getPixelRow();
+							game.players.get(0).pixelCol = b.getPixelCol();
+							game.repaint();
+							game.canMove = true;
+							badClick = false;
+							break;
+						}
+					} else {
+						badClick = true;
+					}
+				}
+				if (badClick == true) {
+					JOptionPane.showMessageDialog(new JOptionPane(),
+							"Invalid selection. Please select a valid target.", "Invalid Selection Made",
+							JOptionPane.ERROR_MESSAGE);
+					badClick = false;
+				}
 			}
 		});
 	}
@@ -87,10 +100,11 @@ public class Board extends JPanel {
 		calcTargets(p.row, p.col, diceRoll());
 		if (!p.isHuman()) {
 			((ComputerPlayer) p).pickLocation(targetList);
-			if (board[p.row][p.col].isRoom()) {
-				List<Card> suggestion = ((ComputerPlayer) p).createSuggestion();
-				game.handleSuggestion(suggestion.get(1).name, suggestion.get(0).name, suggestion.get(2).name, p);
-			}
+			repaint();
+//			if (board[p.row][p.col].isRoom()) {
+//				List<Card> suggestion = ((ComputerPlayer) p).createSuggestion();
+//				game.handleSuggestion(suggestion.get(1).name, suggestion.get(0).name, suggestion.get(2).name, p);
+//			}
 		}
 		repaint();
 		game.controlGUI.dieTextBox.setText("" + diceRoll);

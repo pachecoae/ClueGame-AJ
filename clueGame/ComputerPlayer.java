@@ -31,9 +31,12 @@ public class ComputerPlayer extends Player {
 						continue;
 					}
 					row = b.getRow();
+					pixelRow = b.getPixelRow();
 					col = b.getCol();
+					pixelCol = b.getPixelCol();
 					currentRoom = ((RoomCell) b).getInitial();
 					lastRoomVisited = currentRoom;
+					// Make suggestion?
 					return;
 				}
 			}
@@ -48,7 +51,9 @@ public class ComputerPlayer extends Player {
 			Collections.shuffle(targetList);
 		}
 		row = b.getRow();
+		pixelRow = b.getPixelRow();
 		col = b.getCol();
+		pixelCol = b.getPixelCol();
 		currentRoom = 'W';
 	}
 
