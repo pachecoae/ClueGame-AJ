@@ -17,6 +17,7 @@ import java.util.Set;
 import java.util.List;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -60,6 +61,7 @@ public class Board extends JPanel {
 							game.players.get(0).pixelRow = b.getPixelRow();
 							game.players.get(0).pixelCol = b.getPixelCol();
 							game.repaint();
+							game.canMove = true;
 							break;
 						}
 					}

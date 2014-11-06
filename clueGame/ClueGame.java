@@ -20,6 +20,7 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 
 import clueGame.Card.CardType;
 
@@ -39,7 +40,7 @@ public class ClueGame extends JFrame {
 	public int turn;
 	public ControlGUI controlGUI;
 
-	// boolean canMove;
+	boolean canMove;
 
 	public ClueGame(String map, String legend, String deck, String players) {
 		this.board = new Board(this);
@@ -58,7 +59,7 @@ public class ClueGame extends JFrame {
 	public void setUpGUI() {
 		setVisible(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		// JOptionPane.showMessageDialog(new JOptionPane(), "You are Miss Scarlet. Press Next Player to Begin!",
+		// JOptionPane.showMessageDialog(new JOptionPane(), "You are Professor Plum. Press Next Player to Begin!",
 		// "Welcome to Clue!", JOptionPane.INFORMATION_MESSAGE);
 		setTitle("Clue");
 		add(board, BorderLayout.CENTER);
@@ -350,13 +351,18 @@ public class ClueGame extends JFrame {
 	}
 
 	public void nextPlayer() {
-		turn++;
 		if (players.get(turn % 6).isHuman) {
-			board.movePlayer(players.get(turn % 6));
-			// safe to move flag
-			// canMove = false;
+			if(canMove == true){
+				turn++;
+				board.movePlayer(players.get(turn % 6));
+			}
+			else{
+				JOptionPane.showMessageDialog(new JOptionPane(), "You must finish your turn! (Make a move or accusation)", "Error!", JOptionPane.ERROR_MESSAGE);
+			}
 		} else {
+			turn++;
 			board.movePlayer(players.get(turn % 6));
+			canMove = false;
 		}
 	}
 
