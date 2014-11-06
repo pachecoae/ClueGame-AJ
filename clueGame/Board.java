@@ -84,7 +84,7 @@ public class Board extends JPanel {
 	}
 
 	public void movePlayer(Player p) {
-		calcTargets(p.getRow(), p.getCol(), diceRoll());
+		calcTargets(p.row, p.col, diceRoll());
 		if (!p.isHuman()) {
 			((ComputerPlayer) p).pickLocation(targetList);
 			if (board[p.row][p.col].isRoom()) {
