@@ -16,7 +16,7 @@ public class CR_BoardAdjTargetTests {
 
 	@BeforeClass
 	public static void setUp() {
-		ClueGame game = new ClueGame("ClueLayoutStudents.csv", "roomConfig.txt", "Cards.txt",
+		ClueGame game = new ClueGame("ClueLayout.csv", "ClueLegend.txt", "Cards.txt",
 				"PlayerCards.txt");
 		game.loadConfigFiles();
 		board = game.getBoard();

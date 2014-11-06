@@ -202,6 +202,9 @@ public class GameActionTest {
 
 		// Create a list of targets that include the last visited room.
 		game.getBoard().calcTargets(21, 5, 1);
+		
+		// System.out.println("here");
+		
 		targetList = game.getBoard().getTargets();
 		ai.pickLocation(targetList);
 		Assert.assertEquals('W', ai.currentRoom);

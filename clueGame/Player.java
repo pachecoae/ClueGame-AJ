@@ -16,6 +16,7 @@ public class Player {
 	protected int pixelCol;
 	protected int row;
 	protected int pixelRow;
+	protected boolean isHuman;
 	protected static final int circleDim = 30;
 
 	public Player(String name, Color color, int row, int col) {
@@ -27,6 +28,10 @@ public class Player {
 		this.pixelCol = row * 30;
 		myCards = new ArrayList<>();
 
+	}
+
+	public boolean isHuman() {
+		return isHuman;
 	}
 
 	public void draw(Graphics g) {

@@ -1,9 +1,7 @@
 package clueGame;
 
-import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.event.MouseListener;
-import java.awt.event.ActionEvent;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
@@ -11,16 +9,13 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Map;
+import java.util.Random;
 import java.util.Scanner;
 import java.util.Set;
 
-import javax.swing.JDialog;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 import clueGame.RoomCell.DoorDirection;
 
@@ -37,8 +32,33 @@ public class Board extends JPanel {
 	private Map<BoardCell, LinkedList<BoardCell>> adjList;
 	private ArrayList<Player> players;
 	private DetectiveNotes dNotes = new DetectiveNotes();
+	private JTextField turn;
+	private ClueGame game;
+	private int diceRoll;
 
 	// private myDialog dialog;
+
+	public Board(ClueGame game) {
+		this.game = game;
+		// TODO Auto-generated constructor stub
+	}
+
+	public void movePlayer(Player p) {
+		calcTargets(p.getRow(), p.getCol(), diceRoll());
+		if (!p.isHuman()) {
+
+		}
+		repaint();
+		game.controlGUI.dieTextBox.setText("" + diceRoll);
+		game.controlGUI.displayTurnBox.setText(game.players.get(game.turn % 6).getName());
+
+	}
+
+	public int diceRoll() {
+		Random rand = new Random();
+		diceRoll = rand.nextInt(6) + 1;
+		return diceRoll;
+	}
 
 	public void drawFrame() {
 		// Create a JFrame
@@ -51,72 +71,18 @@ public class Board extends JPanel {
 		JPanel panel = new JPanel();
 		panel.setLocation(0, 0);
 		panel.setSize(750, 750);
+
+		panel.setVisible(true);
+
 		f.add(panel);
-		f.setJMenuBar(createMenuBar());		
-		
+		// f.setJMenuBar(createMenuBar());
+
 		// Necessary at end
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		f.setContentPane(this);
 		// dialog.setVisible(true);
 		f.setVisible(true);
 		f.repaint();
-	}
-
-	public JMenuBar createMenuBar() {
-		JMenuBar menuBar;
-		JMenu menu;
-		JMenuItem menuItem;
-
-		// Create the menu bar.
-		menuBar = new JMenuBar();
-
-		// Build the first menu.
-		menu = new JMenu("Menu");
-		menuBar.add(menu);
-
-		//Creates the Detective notes for the menu
-		JMenuItem notesAction = new JMenuItem("Detective Notes");
-		notesAction.addMouseListener(new MouseListener(){
-			@Override
-			public void mouseEntered(java.awt.event.MouseEvent e) {}
-			@Override
-			public void mouseExited(java.awt.event.MouseEvent e) {}
-			@Override
-			public void mousePressed(java.awt.event.MouseEvent e){
-				dNotes = new DetectiveNotes();
-				dNotes.setVisible(true);
-			}
-			@Override
-			public void mouseReleased(java.awt.event.MouseEvent e){}
-			@Override
-			public void mouseClicked(java.awt.event.MouseEvent e) {}
-		});
-		
-
-		
-		//Creates the Exit button
-		JMenuItem exitAction = new JMenuItem("Exit");
-		exitAction.addMouseListener(new MouseListener(){
-			@Override
-			public void mouseEntered(java.awt.event.MouseEvent e) {}
-			@Override
-			public void mouseExited(java.awt.event.MouseEvent e) {}
-			@Override
-			public void mousePressed(java.awt.event.MouseEvent e){
-				System.exit(0);
-			}
-			@Override
-			public void mouseReleased(java.awt.event.MouseEvent e){}
-			@Override
-			public void mouseClicked(java.awt.event.MouseEvent e){}
-		});
-		
-		//Adds the objects to the menu
-		menu.add(notesAction);
-		menu.addSeparator();
-		menu.add(exitAction);
-
-		return menuBar;
 	}
 
 	public void drawNames(Graphics g) {
@@ -146,6 +112,16 @@ public class Board extends JPanel {
 			for (int j = 0; j < numColumns; j++) {
 				board[i][j].draw(g, this);
 			}
+		}
+
+		Color temp = g.getColor();
+
+		if (game.turn % 6 == 0 && game.turn > 1) {
+			g.setColor(Color.GREEN);
+			for (BoardCell b : targetList) {
+				g.fillRect(b.getPixelRow(), b.getPixelCol(), 30, 30);
+			}
+			g.setColor(temp);
 		}
 
 		for (Player p : players) {
@@ -265,6 +241,7 @@ public class Board extends JPanel {
 		visited = new HashSet<BoardCell>();
 		visited.add(getCellAt(row, col));
 		findAllTargets(getCellAt(row, col), moves);
+
 	}
 
 	public void findAllTargets(BoardCell cell, int moves) {

@@ -1,6 +1,9 @@
 package clueGame;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -14,7 +17,9 @@ import java.util.Map;
 import java.util.Scanner;
 
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 
 import clueGame.Card.CardType;
 
@@ -32,9 +37,10 @@ public class ClueGame extends JFrame {
 	private List<Card> deck;
 	public Solution solution;
 	public int turn;
+	public ControlGUI controlGUI;
 
 	public ClueGame(String map, String legend, String deck, String players) {
-		this.board = new Board();
+		this.board = new Board(this);
 		this.rooms = new HashMap<Character, String>();
 		this.players = new ArrayList<>();
 		this.mapFile = map;
@@ -43,7 +49,101 @@ public class ClueGame extends JFrame {
 		this.deckFile = deck;
 		this.deck = new ArrayList<>();
 		this.solution = new Solution();
-		this.turn = 0;
+		this.turn = 5;
+
+	}
+
+	public void setUpGUI() {
+		setVisible(true);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		// JOptionPane.showMessageDialog(new JOptionPane(), "You are Miss Scarlet. Press Next Player to Begin!",
+		// "Welcome to Clue!", JOptionPane.INFORMATION_MESSAGE);
+		setTitle("Clue");
+		add(board, BorderLayout.CENTER);
+		setSize(955, 850);
+		JMenuBar menuBar = new JMenuBar();
+		setJMenuBar(menuBar);
+		menuBar.add(createMenuBar());
+
+		controlGUI = new ControlGUI(this);
+
+		add(controlGUI, BorderLayout.SOUTH);
+
+		add(controlGUI.createMyCards(), BorderLayout.EAST);
+
+		setSize(956, 900);
+	}
+
+	public JMenuItem createMenuBar() {
+		// JMenuBar menuBar;
+		JMenu menu;
+		// JMenuItem menuItem;
+
+		// Create the menu bar.
+		// menuBar = new JMenuBar();
+
+		// Build the first menu.
+		menu = new JMenu("Menu");
+		// menuBar.add(menu);
+
+		// Creates the Detective notes for the menu
+		JMenuItem notesAction = new JMenuItem("Detective Notes");
+		notesAction.addMouseListener(new MouseListener() {
+
+			@Override
+			public void mousePressed(java.awt.event.MouseEvent e) {
+				DetectiveNotes dNotes = new DetectiveNotes();
+				dNotes.setVisible(true);
+			}
+
+			@Override
+			public void mouseReleased(java.awt.event.MouseEvent e) {
+			}
+
+			@Override
+			public void mouseClicked(java.awt.event.MouseEvent e) {
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+			}
+		});
+
+		// Creates the Exit button
+		JMenuItem exitAction = new JMenuItem("Exit");
+		exitAction.addMouseListener(new MouseListener() {
+			@Override
+			public void mouseEntered(java.awt.event.MouseEvent e) {
+			}
+
+			@Override
+			public void mouseExited(java.awt.event.MouseEvent e) {
+			}
+
+			@Override
+			public void mousePressed(java.awt.event.MouseEvent e) {
+				System.exit(0);
+			}
+
+			@Override
+			public void mouseReleased(java.awt.event.MouseEvent e) {
+			}
+
+			@Override
+			public void mouseClicked(java.awt.event.MouseEvent e) {
+			}
+		});
+
+		// Adds the objects to the menu
+		menu.add(notesAction);
+		menu.addSeparator();
+		menu.add(exitAction);
+
+		return menu;
 	}
 
 	public Board getBoard() {
@@ -247,14 +347,24 @@ public class ClueGame extends JFrame {
 		return color;
 	}
 
+	public void nextPlayer() {
+		turn++;
+		board.movePlayer(players.get(turn % 6));
+	}
+
 	public static void main(String[] args) {
 		ClueGame game = new ClueGame("ClueLayoutStudents.csv", "roomConfig.txt", "Cards.txt", "PlayerCards.txt");
 		game.loadConfigFiles();
-		Board board = game.getBoard();
-		board.drawFrame();
-		DetectiveNotes gui = new DetectiveNotes();
-		gui.setVisible(true);
-		JOptionPane.showMessageDialog(null, "You are Miss Scarlet. Press Next Player to Begin.");
+		game.deal();
+		game.setUpGUI();
+		game.board.calcAdjacencies();
+
+		// Board board = game.getBoard();
+		// board.drawFrame();
+		// DetectiveNotes gui = new DetectiveNotes();
+		// gui.setVisible(true);
+		// JOptionPane.showMessageDialog(null, "You are Miss Scarlet. Press Next Player to Begin.");
 
 	}
+
 }
