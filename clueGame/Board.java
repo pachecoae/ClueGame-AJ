@@ -2,6 +2,8 @@ package clueGame;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
@@ -12,6 +14,7 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.Set;
+import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -38,15 +41,56 @@ public class Board extends JPanel {
 
 	// private myDialog dialog;
 
-	public Board(ClueGame game) {
-		this.game = game;
-		// TODO Auto-generated constructor stub
+	public Board(final ClueGame clueGame) {
+		this.game = clueGame;
+		addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				for (BoardCell b : targetList) {
+					if (e.getY() <= b.getPixelCol() + 30 && e.getY() >= b.getPixelCol()) {
+						if (e.getX() <= b.getPixelRow() + 30 && e.getX() >= b.getPixelRow()) {
+							game.players.get(0).row = b.getRow();
+							game.players.get(0).col = b.getCol();
+							game.players.get(0).pixelRow = b.getPixelRow();
+							game.players.get(0).pixelCol = b.getPixelCol();
+							game.repaint();
+							break;
+						}
+					}
+				}
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+
+			}
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+
+			}
+		});
 	}
 
 	public void movePlayer(Player p) {
 		calcTargets(p.getRow(), p.getCol(), diceRoll());
 		if (!p.isHuman()) {
-
+			((ComputerPlayer) p).pickLocation(targetList);
+			if (board[p.row][p.col].isRoom()) {
+				List<Card> suggestion = ((ComputerPlayer) p).createSuggestion();
+				game.handleSuggestion(suggestion.get(1).name, suggestion.get(0).name, suggestion.get(2).name, p);
+			}
 		}
 		repaint();
 		game.controlGUI.dieTextBox.setText("" + diceRoll);

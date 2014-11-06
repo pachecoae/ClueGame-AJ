@@ -39,6 +39,8 @@ public class ClueGame extends JFrame {
 	public int turn;
 	public ControlGUI controlGUI;
 
+	// boolean canMove;
+
 	public ClueGame(String map, String legend, String deck, String players) {
 		this.board = new Board(this);
 		this.rooms = new HashMap<Character, String>();
@@ -349,7 +351,13 @@ public class ClueGame extends JFrame {
 
 	public void nextPlayer() {
 		turn++;
-		board.movePlayer(players.get(turn % 6));
+		if (players.get(turn % 6).isHuman) {
+			board.movePlayer(players.get(turn % 6));
+			// safe to move flag
+			// canMove = false;
+		} else {
+			board.movePlayer(players.get(turn % 6));
+		}
 	}
 
 	public static void main(String[] args) {

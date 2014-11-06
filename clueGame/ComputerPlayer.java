@@ -34,11 +34,11 @@ public class ComputerPlayer extends Player {
 					col = b.getCol();
 					currentRoom = ((RoomCell) b).getInitial();
 					lastRoomVisited = currentRoom;
-					// TODO createSuggestion()?
 					return;
 				}
 			}
 		}
+		
 		// If a doorway has not been found, or has already been visited, shuffle the possible locations and return a
 		// walkway.
 		List<BoardCell> targetList = new ArrayList<>(targets);
