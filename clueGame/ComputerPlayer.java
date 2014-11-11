@@ -8,9 +8,10 @@ import java.util.Set;
 
 public class ComputerPlayer extends Player {
 	public char lastRoomVisited;
-	public static List<Card> unseen = new ArrayList<>();
+	public static List<Card> unseen;
 	public char currentRoom;
 	public List<Card> suggestion;
+	public static boolean canMakeAccusation;
 
 	public ComputerPlayer(String name, Color color, int col, int row) {
 		super(name, color, col, row);
@@ -42,10 +43,16 @@ public class ComputerPlayer extends Player {
 				}
 			}
 		}
-		
+
 		// If a doorway has not been found, or has already been visited, shuffle the possible locations and return a
 		// walkway.
 		List<BoardCell> targetList = new ArrayList<>(targets);
+
+		// TODO What's going on here?
+		if (targetList.size() < 1) {
+			System.out.println("Problem with player " + getName() + "'s turn.");
+		}
+
 		BoardCell b = targetList.get(0);
 		// If a doorway has already been visited, and is still in the target list, make sure to return only a walkway.
 		while (b.isDoorway()) {
@@ -60,7 +67,6 @@ public class ComputerPlayer extends Player {
 
 	public List<Card> createSuggestion() {
 		suggestion = new ArrayList<>();
-
 		// Add current room to the suggestion.
 		String roomName = Board.getRooms().get(currentRoom);
 		suggestion.add(new Card(roomName, Card.CardType.ROOM));

@@ -17,6 +17,8 @@ public class ControlGUI extends JPanel {
 	private ClueGame game;
 	public JTextField dieTextBox;
 	public JTextField displayTurnBox;
+	public JTextField guessTextBox;
+	public JTextField responseTextBox;
 
 	public ControlGUI(ClueGame game) {
 		this.game = game;
@@ -80,7 +82,7 @@ public class ControlGUI extends JPanel {
 		rightPanel.setLayout(new GridLayout(2, 1));
 		rightPanel.add(name);
 		rightPanel.add(textBox);
-		// textBox.
+		guessTextBox = textBox;
 		rightPanel.setBorder(new TitledBorder(new EtchedBorder(), "Guess"));
 		return rightPanel;
 	}
@@ -93,8 +95,8 @@ public class ControlGUI extends JPanel {
 		centerPanel.setLayout(new GridLayout(2, 1));
 		centerPanel.add(name);
 		centerPanel.add(textBox);
-		centerPanel.setBorder(new TitledBorder(new EtchedBorder(),
-				"Guess Result"));
+		responseTextBox = textBox;
+		centerPanel.setBorder(new TitledBorder(new EtchedBorder(), "Guess Result"));
 		return centerPanel;
 	}
 
@@ -102,7 +104,7 @@ public class ControlGUI extends JPanel {
 
 	private JPanel createCenterN() {
 		JPanel centerPanel = new JPanel();
-		JButton makeAnAccusation = new JButton("Next Player");
+		JButton nextPlayer = new JButton("Next Player");
 
 		class ButtonClickListener implements ActionListener {
 			@Override
@@ -111,10 +113,10 @@ public class ControlGUI extends JPanel {
 			}
 		}
 
-		makeAnAccusation.addActionListener(new ButtonClickListener());
+		nextPlayer.addActionListener(new ButtonClickListener());
 
 		centerPanel.setLayout(new GridLayout(1, 1));
-		centerPanel.add(makeAnAccusation);
+		centerPanel.add(nextPlayer);
 		return centerPanel;
 	}
 

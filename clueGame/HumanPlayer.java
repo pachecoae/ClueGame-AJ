@@ -18,10 +18,6 @@ public class HumanPlayer extends Player {
 		isHuman = true;
 	}
 
-	public HumanPlayer() {
-		super();
-	}
-
 	public void createSuggestion(){
 		JFrame frame = new JFrame();
 		frame.setName("Make a Suggestion");
@@ -74,10 +70,5 @@ public class HumanPlayer extends Player {
 		
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	}
-
-	public static void main(String[] args) {
-		HumanPlayer player = new HumanPlayer();
-		player.createSuggestion();
 	}
 }

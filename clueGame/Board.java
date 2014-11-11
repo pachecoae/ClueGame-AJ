@@ -10,11 +10,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.Set;
-import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -101,15 +101,14 @@ public class Board extends JPanel {
 		if (!p.isHuman()) {
 			((ComputerPlayer) p).pickLocation(targetList);
 			repaint();
-//			if (board[p.row][p.col].isRoom()) {
-//				List<Card> suggestion = ((ComputerPlayer) p).createSuggestion();
-//				game.handleSuggestion(suggestion.get(1).name, suggestion.get(0).name, suggestion.get(2).name, p);
-//			}
+			if (board[p.row][p.col].isRoom()) {
+				List<Card> suggestion = ((ComputerPlayer) p).createSuggestion();
+				game.handleSuggestion(suggestion.get(1).name, suggestion.get(0).name, suggestion.get(2).name, p);
+			}
 		}
 		repaint();
 		game.controlGUI.dieTextBox.setText("" + diceRoll);
 		game.controlGUI.displayTurnBox.setText(game.players.get(game.turn % 6).getName());
-
 	}
 
 	public int diceRoll() {

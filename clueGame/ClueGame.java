@@ -156,8 +156,8 @@ public class ClueGame extends JFrame {
 	public void loadConfigFiles() {
 		try {
 			loadRoomConfig();
-			loadPlayersConfig();
 			loadCardConfig();
+			loadPlayersConfig();
 			board.loadBoardConfig(mapFile);
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
@@ -198,6 +198,9 @@ public class ClueGame extends JFrame {
 		}
 		reader.close();
 		board.setPlayers(this.players);
+
+		ComputerPlayer.unseen = new ArrayList<>(deck);
+
 	}
 
 	// This method generates the deck of cards from a text file
@@ -314,13 +317,30 @@ public class ClueGame extends JFrame {
 				// Updates suggestion with a random card or null if there is no match.
 				suggestion = p.disproveSuggestion(person, room, weapon);
 			}
-			if (suggestion != null) {
-				// If suggestion contains a random card, return it.
-				return suggestion;
+		}
+		// If no cards are found, return null.
+		if (suggestion != null) {
+			// If suggestion contains a random card, return it.
+			ComputerPlayer.unseen.remove(suggestion);
+			if (ComputerPlayer.unseen.size() == 3) {
+				ComputerPlayer.canMakeAccusation = true;
+			}
+			controlGUI.responseTextBox.setText(suggestion.name);
+			return suggestion;
+		} else {
+			controlGUI.responseTextBox.setText("No new clue!");
+		}
+		controlGUI.guessTextBox.setText(person + " in the " + room + " with the " + weapon);
+		for (Player p : players) {
+			if (p.getName().equals(person)) {
+				p.col = accusingPerson.col;
+				p.pixelCol = accusingPerson.pixelCol;
+				p.row = accusingPerson.row;
+				p.pixelRow = accusingPerson.pixelRow;
 			}
 		}
-		// If no cards are found, return a null suggestion.
-		return suggestion;
+		repaint();
+		return null;
 	}
 
 	// Checks to see if the solution's person, weapon, and room names are the same as the accused
@@ -352,20 +372,41 @@ public class ClueGame extends JFrame {
 
 	public void nextPlayer() {
 		if (players.get(turn % 6).isHuman) {
-			if(canMove == true){
-				if(board.getCellAt(players.get(turn % 6).row, players.get(turn % 6).col).isDoorway()){
-						
+			if (canMove == true) {
+				if (board.getCellAt(players.get(turn % 6).row, players.get(turn % 6).col).isDoorway()) {
+					// players.get(turn % 6).disproveSuggestion(person, room, weapon)
 				}
 				turn++;
 				board.movePlayer(players.get(turn % 6));
-			}
-			else{
-				JOptionPane.showMessageDialog(new JOptionPane(), "You must finish your turn! (Make a move or accusation)", "Error!", JOptionPane.ERROR_MESSAGE);
+			} else {
+				JOptionPane.showMessageDialog(new JOptionPane(),
+						"You must finish your turn! (Make a move or accusation)", "Error!", JOptionPane.ERROR_MESSAGE);
 			}
 		} else {
 			turn++;
-			board.movePlayer(players.get(turn % 6));
-			canMove = false;
+			if (ComputerPlayer.canMakeAccusation == true) {
+				Solution unseenSolution = new Solution();
+				for (Card c : ComputerPlayer.unseen) {
+					if (c.type == CardType.PERSON) {
+						unseenSolution.setPerson(c.name);
+					} else if (c.type == CardType.ROOM) {
+						unseenSolution.setRoom(c.name);
+					} else if (c.type == CardType.WEAPON) {
+						unseenSolution.setWeapon(c.name);
+					}
+				}
+				if (checkAccusation(unseenSolution) == true) {
+					JOptionPane.showMessageDialog(new JOptionPane(), players.get(turn % 6).getName()
+							+ "has won the game with the accusation of " + unseenSolution.getPerson() + " in the "
+							+ unseenSolution.getRoom() + " with the " + unseenSolution.getWeapon() + "!",
+							"The game is over!", JOptionPane.INFORMATION_MESSAGE);
+					System.exit(0);
+				}
+				canMove = false;
+			} else {
+				board.movePlayer(players.get(turn % 6));
+				canMove = false;
+			}
 		}
 	}
 
