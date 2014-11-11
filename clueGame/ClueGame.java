@@ -353,6 +353,9 @@ public class ClueGame extends JFrame {
 	public void nextPlayer() {
 		if (players.get(turn % 6).isHuman) {
 			if(canMove == true){
+				if(board.getCellAt(players.get(turn % 6).row, players.get(turn % 6).col).isDoorway()){
+						
+				}
 				turn++;
 				board.movePlayer(players.get(turn % 6));
 			}

@@ -10,6 +10,7 @@ public class ComputerPlayer extends Player {
 	public char lastRoomVisited;
 	public static List<Card> unseen = new ArrayList<>();
 	public char currentRoom;
+	public List<Card> suggestion;
 
 	public ComputerPlayer(String name, Color color, int col, int row) {
 		super(name, color, col, row);
@@ -36,7 +37,7 @@ public class ComputerPlayer extends Player {
 					pixelCol = b.getPixelCol();
 					currentRoom = ((RoomCell) b).getInitial();
 					lastRoomVisited = currentRoom;
-					// Make suggestion?
+					createSuggestion();
 					return;
 				}
 			}
@@ -58,7 +59,7 @@ public class ComputerPlayer extends Player {
 	}
 
 	public List<Card> createSuggestion() {
-		List<Card> suggestion = new ArrayList<>();
+		suggestion = new ArrayList<>();
 
 		// Add current room to the suggestion.
 		String roomName = Board.getRooms().get(currentRoom);

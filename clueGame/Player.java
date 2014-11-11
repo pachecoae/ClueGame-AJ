@@ -30,6 +30,8 @@ public class Player {
 
 	}
 
+	public Player(){}
+
 	public boolean isHuman() {
 		return isHuman;
 	}
