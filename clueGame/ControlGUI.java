@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EtchedBorder;
@@ -123,6 +124,22 @@ public class ControlGUI extends JPanel {
 	private JPanel createRightN() {
 		JPanel rightPanel = new JPanel();
 		JButton makeAnAccusation = new JButton("Make an Accusation");
+		
+		class ButtonClickListener implements ActionListener {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(game.turn%6 == 0){
+					Accusation acc = new Accusation(game);
+				}
+				else{
+					JOptionPane.showMessageDialog(new JOptionPane(),
+							"You can only make an accusation during your turn!", "Error!", JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		}
+
+		makeAnAccusation.addActionListener(new ButtonClickListener());
+		
 		makeAnAccusation.setSize(20, 20);
 		rightPanel.setLayout(new GridLayout(1, 1));
 		rightPanel.add(makeAnAccusation);

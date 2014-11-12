@@ -80,6 +80,9 @@ public class Board extends JPanel {
 							game.repaint();
 							game.canMove = true;
 							badClick = false;
+							if(board[game.players.get(0).getRow()][game.players.get(0).getCol()].isRoom()){
+								((HumanPlayer) game.players.get(0)).createSuggestion(rooms.get(((RoomCell) board[game.players.get(0).getRow()][game.players.get(0).getCol()]).getInitial()), game);
+							}
 							break;
 						}
 					} else {
