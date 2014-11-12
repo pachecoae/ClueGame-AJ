@@ -1,3 +1,70 @@
+commit 199e929a98d5c86fa338548457bac96cc14fc67e
+Author: Andre Pacheco <apacheco@mymail.mines.edu>
+Date:   Tue Nov 11 23:20:32 2014 -0700
+
+    Finished Clue.
+
+commit 2f687785316d9987eec3dbaab156c733f8c07caf
+Author: Andre Pacheco <apacheco@mymail.mines.edu>
+Date:   Tue Nov 11 00:24:39 2014 -0700
+
+    Done with everything except for some human stuff.
+
+commit 23c9b12366ac8925df81237e6acfc9eba894c1e6
+Author: astieman <atieman@mines.edu>
+Date:   Mon Nov 10 20:13:20 2014 -0700
+
+    Created suggestion box for humans, unimplemented
+
+commit eb1e6c345990aee400dcb29e9e2d128c7eae1681
+Merge: f2d4d35 0fe0e1a
+Author: Andre Pacheco <apacheco@mymail.mines.edu>
+Date:   Thu Nov 6 16:11:15 2014 -0700
+
+    Finished part I of Clue Game.
+
+commit f2d4d358a94e2b40e615050037c4a81d7fac30aa
+Author: Andre Pacheco <apacheco@mymail.mines.edu>
+Date:   Thu Nov 6 15:33:28 2014 -0700
+
+    Ready to pull.
+
+commit 0fe0e1a601336d0a9c3f9bb90dcc955823ecdee3
+Author: unknown <atieman@MZ022-58.adit.mines.edu>
+Date:   Thu Nov 6 12:17:30 2014 -0700
+
+    Human Player is now required to select a space before moving to the next turn
+
+commit 13f896d46e178877de6ae1a13eecb9ad88fe4701
+Author: Andre Pacheco <apacheco@mymail.mines.edu>
+Date:   Thu Nov 6 11:16:11 2014 -0700
+
+    Added missing class file to push to github.
+
+commit 7ab88e8b63d4c1bd7fd7d1a6312de86fdfa6c51c
+Author: Andre Pacheco <apacheco@mymail.mines.edu>
+Date:   Wed Nov 5 23:56:25 2014 -0700
+
+    Fixed most issues with computer player. Still need to set boolean flag for player and ensure game does not move to the next player until human has finished turn.
+
+commit c9f655286fd6f66762e2878c97d400e282e4b70b
+Author: Andre Pacheco <apacheco@mymail.mines.edu>
+Date:   Wed Nov 5 22:42:46 2014 -0700
+
+    Created splash screen, player card display, next player, player turns. Still need to finish computer player turn and human player turn.
+
+commit 3c04b26679564f5e80f835bfcacb7486ec0eccfc
+Author: astieman <atieman@mines.edu>
+Date:   Mon Nov 3 23:18:59 2014 -0700
+
+    Added Menu Funcitonality and minor changes
+
+commit a57490431fca65ceab12ad4b6bf5620506b982e8
+Author: Andre Pacheco <apacheco@mymail.mines.edu>
+Date:   Mon Nov 3 16:49:10 2014 -0700
+
+    Refactored.
+
 commit 076b75b67973ff1ab619076200a4358ad31a9c97
 Author: Andre Pacheco <apacheco@mymail.mines.edu>
 Date:   Wed Oct 29 23:05:24 2014 -0600
